@@ -16,3 +16,34 @@ Delegate unary, binary, trinary functions into fields of a type.
     @delegateTyped2fields, @delegateTyped3fields
 
     
+## Use
+
+Please see the online help for each macro, or read the source file, for more examples.
+
+```julia
+    import Base: length, last
+    
+    type MyInts     elems::Vector{Int} end;
+    type MyNums{T}  elems::Vector{T}   end;
+
+    @delegate MyInts.elems [ length,  last ];
+    @delegate MyNums.elems [ length,  last ];
+       
+    myInts = MyInts([5, 4, 3, 2, 1]);
+    myNums = MyNums([1.0, 2.0, 3.0]);
+    
+    length(myInts), length(myNums) # 5, 3
+    last(myInts), last(myNums)     # 1, 3.0
+```
+
+```julia
+    import Base: hypot
+    
+    type RightTriangle   legA::Float64; legB::Float64;  end;
+
+    @delegate2fields RightTriangle legA legB [ hypot, ];
+  
+    myRightTriangle  = RightTriangle( 3.0, 4.0 )
+    
+    hypot(myRightTriangle)   #  5.0
+```    
