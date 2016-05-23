@@ -50,6 +50,8 @@
 """
 module DelegationMacros
 
+export @delegate, @delegate2, @delegateTyped, @delegateTyped2
+
 macro delegate(source, targets)
   typename = esc(source.args[1])
   fieldname = esc(Expr(:quote, source.args[2].args[1]))
