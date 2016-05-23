@@ -1,8 +1,3 @@
-#=
-    based on original work by John Myles White and Toivo Henningsson
-    (see end of file for source code refs)
-=#
-
 module DelegationMacros
 
 """
@@ -49,7 +44,14 @@ module DelegationMacros
       
       last(myInts)  # 1
       last(myNums)  # 3.0
-"""
+"""->DelegationMacros
+
+#=
+    based on original work by John Myles White and Toivo Henningsson
+    (see end of file for source code refs)
+=#
+
+
 
 export @delegate, @delegate2, @delegateTyped, @delegateTyped2
 
