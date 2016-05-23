@@ -1,6 +1,7 @@
 module DelegationMacros
 
-export @delegate, @delegate2, @delegate2fields, @delegateTyped, @delegateTyped2
+export @delegate, @delegate2, @delegate2fields, @delegate3fields,
+       @delegateTyped, @delegateTyped2, @delegateTyped2fields
 
 #=
     based on original work by John Myles White and Toivo Henningsson
