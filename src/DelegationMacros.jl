@@ -108,10 +108,10 @@ A macro for type field delegation over two fields of T func{T}(arg::T)
     hypot(myRightTriangle)   #  5.0
     
 """     
-macro delegate2fields(sourceExemplar, field1name, field2name, targets)
-  typesname = esc(sourceExemplar1.args[1])
-  field1name = esc(Expr(:quote, field1name))
-  field2name = esc(Expr(:quote, field2name))
+macro delegate2fields(sourceExemplar, field1, field2, targets)
+  typesname = esc( :($sourceExemplar) )
+  field1name = esc(Expr(:quote, field1))
+  field2name = esc(Expr(:quote, field2))
   funcnames = targets.args
   n = length(funcnames)
   fdefs = Array(Any, n)
@@ -119,7 +119,7 @@ macro delegate2fields(sourceExemplar, field1name, field2name, targets)
     funcname = esc(funcnames[i])
     fdefs[i] = quote
                  ($funcname)(a::($typesname), args...) = 
-                   ($funcname)(getfield(a,($field1name)), getfield(a,($field2name)), args...)
+                   ($funcname)(getfield(a, ($field1name)), getfield(a, Symbol($field2name)), args...)
                end
     end
   return Expr(:block, fdefs...)
