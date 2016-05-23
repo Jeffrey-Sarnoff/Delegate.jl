@@ -1,7 +1,7 @@
 module DelegationMacros
 
 export @delegate, @delegate2, @delegate2fields, @delegate3fields,
-       @delegateTyped, @delegateTyped2, @delegateTyped2fields
+       @delegateTyped, @delegateTyped2, @delegateTyped2fields, @delegateTyped3fields
 
 #=
     based on original work by John Myles White and Toivo Henningsson
@@ -294,11 +294,14 @@ macro delegateTyped2fields(sourceExemplar, field1, field2, targets)
   return Expr(:block, fdefs...)
 end
 
-#=
-macro delegateTyped2fields(sourceExemplar, field1, field2, targets)
+"""
+see help for @delegateTyped2fields
+"""
+macro delegateTyped3fields(sourceExemplar, field1, field2, field3, targets)
   typesname = esc( :($sourceExemplar) )
   field1name = esc(Expr(:quote, field1))
   field2name = esc(Expr(:quote, field2))
+  field3name = esc(Expr(:quote, field3))
   funcnames = targets.args
   n = length(funcnames)
   fdefs = Array(Any, n)
@@ -306,13 +309,11 @@ macro delegateTyped2fields(sourceExemplar, field1, field2, targets)
     funcname = esc(funcnames[i])
     fdefs[i] = quote
                  ($funcname)(a::($typesname), args...) = 
-                   ($typesname)( ($funcname)(getfield(a, ($field1name)), getfield(a, ($field2name)), args...) )
+                    ($typesname)( ($funcname)(getfield(a, ($field1name)), getfield(a, ($field2name)), getfield(a, ($field3name)), args...)... )
                end
     end
   return Expr(:block, fdefs...)
 end
-=#
-
 
 
 end # module DelegationMacros
