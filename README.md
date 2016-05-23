@@ -76,4 +76,20 @@ Delegate unary, binary, trinary functions into fields of a type.
     myIntMultiplies = myFirstInt * mySecondInt    # MyInt(21) 
 ```    
 
+```julia
+    function renormalize(a::Float64, b::Float64)
+        hi = a + b
+        t = hi - a
+        lo = (a - (hi - t)) + (b - t)
+        hi,lo
+    end
+    
+    type HiLo  hi::Float64; lo::Float64;   end;
+    
+    @delegateTyped2fields HiLo hi lo [ renormalize, ];
+  
+    myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ) # HiLo(8012.89,4.44089e-14)
+    showall(myHiLo)                                            # HiLo(8012.888888888,4.440892098500626e-14)
+```
+
 Please see the online help for each macro, or read the source file, for more examples.
