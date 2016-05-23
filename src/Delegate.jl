@@ -1,7 +1,9 @@
 module Delegate
 
-export @delegate, @delegate2vars, @delegate2fields, @delegate3fields,
-       @delegateTyped, @delegate2varsTyped, @delegate2fieldsTyped, @delegate3fieldsTyped
+export @delegate, @delegate2vars, 
+       @delegate2fields, @delegate3fields,
+       @delegateTyped, @delegate2varsTyped, 
+       @delegate2fieldsTyped, @delegate3fieldsTyped
 
 #=
     based on original work by John Myles White and Toivo Henningsson
