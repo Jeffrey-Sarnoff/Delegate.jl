@@ -21,10 +21,10 @@ export @delegate, @delegate2, @delegateTyped, @delegateTyped2
        
     produces these blocks of expressions
  
-      last( a::MyInts)  = last( getfield(a, :elems) )
+      last(a::MyInts)   = last( getfield(a, :elems) )
       length(a::MyInts) = length( getfield(a, :elems) )
  
-      last( a::MyNums)  = last( getfield(a, :elems) )
+      last(a::MyNums)   = last( getfield(a, :elems) )
       length(a::MyNums) = length( getfield(a, :elems) )
   
     and allows
@@ -32,8 +32,8 @@ export @delegate, @delegate2, @delegateTyped, @delegateTyped2
       length(myInts) # 5
       length(myNums) # 3
       
-      last(myInts)  # 1
-      last(myNums)  # 3.0
+      last(myInts)   # 1
+      last(myNums)   # 3.0
 
 """     
 macro delegate(source, targets)
@@ -64,7 +64,12 @@ end
        type MyInts                   type MyNums{T}
            elems::Vector{Int}           elems::T
        end                           end
-        
+    
+    and
+    
+       myInts = MyInts([5, 4, 3, 2, 1])
+       myNums = MyNums([1.0, 2.0, 3.0])
+       
     These macro calls
  
        @delegate MyInts.elems [ length,  last ]
@@ -118,6 +123,11 @@ end
           i::Int
        end
         
+    and
+    
+       myInts = MyInts([5, 4, 3, 2, 1])
+       myNums = MyNums([1.0, 2.0, 3.0])
+    
     These macro calls
  
        @delegateTyped MyInt.i      [ abs, ]
