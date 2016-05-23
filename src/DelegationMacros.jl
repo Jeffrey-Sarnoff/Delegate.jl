@@ -4,30 +4,22 @@ export @delegate, @delegate2, @delegateTyped, @delegateTyped2
 
 """
 
-    macro for type field delegation over func{T}(arg::T)
+    a macro for type field delegation over func{T}(arg::T)
     
-    import Base: length, last
+    This
     
-    Given these types
+       import Base: length, last
     
-       type MyInts                   type MyNums{T}
-           elems::Vector{Int}           elems::T
-       end                           end
-        
-    These macro calls
+       type MyInts     elems::Vector{Int} end
+       type MyNums{T}  elems::Vector{T}   end
+
+       myInts = MyInts([5, 4, 3, 2, 1])
+       myNums = MyNums([1.0, 2.0, 3.0])
  
        @delegate MyInts.elems [ length,  last ]
        @delegate MyNums.elems [ length,  last ]
        
-    produces these blocks of expressions
- 
-      last(a::MyInts)   = last( getfield(a, :elems) )
-      length(a::MyInts) = length( getfield(a, :elems) )
- 
-      last(a::MyNums)   = last( getfield(a, :elems) )
-      length(a::MyNums) = length( getfield(a, :elems) )
-  
-    and allows
+    Allows
 
       length(myInts) # 5
       length(myNums) # 3
