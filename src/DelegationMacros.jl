@@ -119,7 +119,7 @@ macro delegate2fields(sourceExemplar1, sourceExemplar2, targets)
     funcname = esc(funcnames[i])
     fdefs[i] = quote
                  ($funcname)(a::($typesname), b::($typesname), args...) = 
-                   ($funcname)(getfield(a,($fiel1dname)), getfield(a,($field2name)), args...)
+                   ($funcname)(getfield(a,($field1dname)), getfield(a,($field2name)), args...)
                end
     end
   return Expr(:block, fdefs...)
