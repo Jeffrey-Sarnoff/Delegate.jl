@@ -1,4 +1,4 @@
-module DelegationMacros
+module Delegate
 
 export @delegate, @delegate2, @delegate2fields, @delegate3fields,
        @delegateTyped, @delegateTyped2, @delegateTyped2fields, @delegateTyped3fields
@@ -316,7 +316,7 @@ macro delegateTyped3fields(sourceExemplar, field1, field2, field3, targets)
 end
 
 
-end # module DelegationMacros
+end # module Delegate
 
 #=
     initial implementation
