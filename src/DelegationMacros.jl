@@ -134,19 +134,20 @@ A macro for type field delegation with a type wrapped result over func{T}(arg1::
 
   This
 
-    import Base: (+), (*)
+    import Base: (+), (-), (*)
     
     type MyInt  val::Int  end;
 
-    @delegateTyped2 MyInt.val [ (+), (*) ];
+    @delegateTyped2 MyInt.val [ (+), (-), (*) ];
   
   Allows
   
     myFirstInt   = MyInt(3)
     mySecondInt  = MyInt(7)
 
-    myIntSum     = myFirstInt + mySecondInt    # MyInt(10)
-    myIntProduct = myFirstInt * mySecondInt    # MyInt(21) 
+    myIntAdds       = myFirstInt + mySecondInt    # MyInt(10)
+    myIntSubtracts  = myFirstInt - mySecondInt    # MyInt(-4)
+    myIntMultiplies = myFirstInt * mySecondInt    # MyInt(21) 
 
 """
 macro delegateTyped2(sourceExemplar, targets)
