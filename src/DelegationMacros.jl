@@ -75,6 +75,7 @@ end
 
 
 @doc"""
+
     macros for doing delegation
     import Base: length, last, (abs), (+)
     
@@ -118,6 +119,7 @@ end
       
       last(myInts)  # 1
       last(myNums)  # 3.0
+      
 """->@delegate
 
 #=
