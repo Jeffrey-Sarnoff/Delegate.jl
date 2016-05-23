@@ -126,7 +126,7 @@ end
 =#
 
 
-end module # DelegationMacros
+end # module DelegationMacros
 
 #=
     initial implementation
