@@ -1,7 +1,7 @@
 module Delegate
 
-export @delegate, @delegate2, @delegate2fields, @delegate3fields,
-       @delegateTyped, @delegate2Typed, @delegate2fieldsTyped, @delegate3fieldsTyped
+export @delegate, @delegate2vars, @delegate2fields, @delegate3fields,
+       @delegateTyped, @delegate2varsTyped, @delegate2fieldsTyped, @delegate3fieldsTyped
 
 #=
     based on original work by John Myles White and Toivo Henningsson
@@ -60,7 +60,7 @@ A macro for type field delegation over func{T}(arg1::T, arg2::T)
     
     type MyInt  val::Int  end;
 
-    @delegate2 MyInt.val [ (<), (<=) ];
+    @delegate2vars MyInt.val [ (<), (<=) ];
   
   Allows
   
@@ -71,7 +71,7 @@ A macro for type field delegation over func{T}(arg1::T, arg2::T)
     mySecondInt <= myFirstInt   # false
 
 """     
-macro delegate2(sourceExemplar, targets)
+macro delegate2vars(sourceExemplar, targets)
   typesname = esc(sourceExemplar.args[1])
   fieldname = esc(Expr(:quote, sourceExemplar.args[2].args[1]))
   funcnames = targets.args
@@ -222,7 +222,7 @@ A macro for type field delegation with an iso-typed result over func{T}(arg1::T,
     
     type MyInt  val::Int  end;
 
-    @delegate2Typed MyInt.val [ (+), (-), (*) ];
+    @delegate2varsTyped MyInt.val [ (+), (-), (*) ];
   
   Allows
   
@@ -234,7 +234,7 @@ A macro for type field delegation with an iso-typed result over func{T}(arg1::T,
     myIntMultiplies = myFirstInt * mySecondInt    # MyInt(21) 
 
 """
-macro delegate2Typed(sourceExemplar, targets)
+macro delegate2varsTyped(sourceExemplar, targets)
   typesname = esc(sourceExemplar.args[1])
   fieldname = esc(Expr(:quote, sourceExemplar.args[2].args[1]))
   funcnames = targets.args
