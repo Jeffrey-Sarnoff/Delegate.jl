@@ -4,25 +4,25 @@ export @delegate, @delegate2, @delegateTyped, @delegateTyped2
 
 """
 
-    a macro for type field delegation over func{T}(arg::T)
+A macro for type field delegation over func{T}(arg::T)
     
-    This
+  This
     
-       import Base: length, last
+    import Base: length, last
     
-       type MyInts     elems::Vector{Int} end
-       type MyNums{T}  elems::Vector{T}   end
+    type MyInts     elems::Vector{Int} end;
+    type MyNums{T}  elems::Vector{T}   end;
 
-       myInts = MyInts([5, 4, 3, 2, 1])
-       myNums = MyNums([1.0, 2.0, 3.0])
- 
-       @delegate MyInts.elems [ length,  last ]
-       @delegate MyNums.elems [ length,  last ]
+    @delegate MyInts.elems [ length,  last ]
+    @delegate MyNums.elems [ length,  last ]
        
-    Allows
+  Allows
 
-      length(myInts), length(myNums) # 5, 3
-      last(myInts), last(myNums)     # 1, 3.0
+    myInts = MyInts([5, 4, 3, 2, 1]);
+    myNums = MyNums([1.0, 2.0, 3.0]);
+    
+    length(myInts), length(myNums) # 5, 3
+    last(myInts), last(myNums)     # 1, 3.0
 
 """     
 macro delegate(source, targets)
@@ -44,41 +44,23 @@ end
 
 """
 
-    a macro for type field delegation over func{T}(arg1::T, arg2::T)
+A macro for type field delegation over func{T}(arg1::T, arg2::T)
     
-    import Base: length, last
-    
-    Given these types
-    
-       type MyInts                   type MyNums{T}
-           elems::Vector{Int}           elems::T
-       end                           end
-    
-    and
-    
-       myInts = MyInts([5, 4, 3, 2, 1])
-       myNums = MyNums([1.0, 2.0, 3.0])
-       
-    These macro calls
- 
-       @delegate MyInts.elems [ length,  last ]
-       @delegate MyNums.elems [ length,  last ]
-       
-    produces these blocks of expressions
- 
-      last( a::MyInts)  = last( getfield(a, :elems) )
-      length(a::MyInts) = length( getfield(a, :elems) )
- 
-      last( a::MyNums)  = last( getfield(a, :elems) )
-      length(a::MyNums) = length( getfield(a, :elems) )
-  
-    and allows
+  This
 
-      length(myInts) # 5
-      length(myNums) # 3
-      
-      last(myInts)  # 1
-      last(myNums)  # 3.0
+    import Base: (<), (<=)
+    
+    type MyInt  val::Int  end;
+
+    @delegate2 MyInt.val [ (<), (<=) ]
+  
+  Allows
+  
+    myFirstInt  = MyInt(3)
+    mySecondInt = MyInt(7)
+
+    myFirstInt  <  mySecondInt  # true
+    mySecondInt <= myFirstInt   # false
 
 """     
 macro delegate2(sourceExemplar, targets)
@@ -102,36 +84,22 @@ end
 
 """
 
-    a macro for type field delegation with a type wrapped result over func{T}(arg::T)
+A macro for type field delegation with a type wrapped result over func{T}(arg::T)
     
-    import Base: (abs), (+)
-    
-    Given the type
-    
-       type MyInt
-          i::Int
-       end
-        
-    and
-    
-       myInts = MyInts([5, 4, 3, 2, 1])
-       myNums = MyNums([1.0, 2.0, 3.0])
-    
-    These macro calls
- 
-       @delegateTyped MyInt.i      [ abs, ]
-       @delegateTyped2 MyInt.i     [ (+), ]
-       
-    produces these blocks of expressions
- 
-      abs(a::MyInt)           = MyInt( abs( getfield(a, :i) ) )
-      (+)(a::MyInt, b::MyInt) = MyInt( (+)( getfield(a, :i), getfield(b, :i) ) ) 
- 
-      myFirstInt = MyInt(-1)
-      mySecondInt = MyInt(2)
+  This
 
-      abs(myFirstInt)          # MyInt(1)
-      myFirstInt + mySecondInt # MyInt(1)
+    import Base: (-), abs
+    
+    type MyInt  val::Int  end;
+
+    @delegateTyped MyInt.val [ (-), abs ]
+  
+  Allows
+  
+    myFirstInt  = MyInt(3)
+
+    myFirstNegativeInt  = -myFirstInt              # MyInt(-3)
+    myFirstIntRecovered = abs(myFirstNegativeInt)  # MyInt( 3)    
 
 """
 macro delegateTyped(source, targets)
@@ -155,31 +123,23 @@ end
 
 """
 
-    a macro for type field delegation with a type wrapped result over func{T}(arg1::T, arg2::T)
-    
-    import Base: (abs), (+)
-    
-    Given the type
-    
-       type MyInt
-          i::Int
-       end
-        
-    These macro calls
- 
-       @delegateTyped MyInt.i      [ abs, ]
-       @delegateTyped2 MyInt.i     [ (+), ]
-       
-    produces these blocks of expressions
- 
-      abs(a::MyInt)           = MyInt( abs( getfield(a, :i) ) )
-      (+)(a::MyInt, b::MyInt) = MyInt( (+)( getfield(a, :i), getfield(b, :i) ) ) 
- 
-      myFirstInt = MyInt(-1)
-      mySecondInt = MyInt(2)
+A macro for type field delegation with a type wrapped result over func{T}(arg1::T, arg2::T)
 
-      abs(myFirstInt)          # MyInt(1)
-      myFirstInt + mySecondInt # MyInt(1)
+  This
+
+    import Base: (+), (*)
+    
+    type MyInt  val::Int  end;
+
+    @delegateTyped2 MyInt.val [ (+), (*) ];
+  
+  Allows
+  
+    myFirstInt   = MyInt(3)
+    mySecondInt  = MyInt(7)
+
+    myIntSum     = myFirstInt + mySecondInt    # MyInt(10)
+    myIntProduct = myFirstInt * mySecondInt    # MyInt(21) 
 
 """
 macro delegateTyped2(sourceExemplar, targets)
