@@ -1,7 +1,7 @@
 module Delegate
 
 export @delegate, @delegate2, @delegate2fields, @delegate3fields,
-       @delegateTyped, @delegateTyped2, @delegateTyped2fields, @delegateTyped3fields
+       @delegateTyped, @delegate2Typed, @delegate2fieldsTyped, @delegate3fieldsTyped
 
 #=
     based on original work by John Myles White and Toivo Henningsson
@@ -222,7 +222,7 @@ A macro for type field delegation with an iso-typed result over func{T}(arg1::T,
     
     type MyInt  val::Int  end;
 
-    @delegateTyped2 MyInt.val [ (+), (-), (*) ];
+    @delegate2Typed MyInt.val [ (+), (-), (*) ];
   
   Allows
   
@@ -234,7 +234,7 @@ A macro for type field delegation with an iso-typed result over func{T}(arg1::T,
     myIntMultiplies = myFirstInt * mySecondInt    # MyInt(21) 
 
 """
-macro delegateTyped2(sourceExemplar, targets)
+macro delegate2Typed(sourceExemplar, targets)
   typesname = esc(sourceExemplar.args[1])
   fieldname = esc(Expr(:quote, sourceExemplar.args[2].args[1]))
   funcnames = targets.args
@@ -269,7 +269,7 @@ A macro for type field delegation with an iso-typed result over two fields of T 
     type HiLo  hi::Float64; lo::Float64;   end;
     
 
-    @delegateTyped2fields HiLo hi lo [ renormalize, ];
+    @delegate2fieldsTyped HiLo hi lo [ renormalize, ];
   
   Allows
   
@@ -277,7 +277,7 @@ A macro for type field delegation with an iso-typed result over two fields of T 
     showall(myHiLo) # (8012.888888888,4.440892098500626e-14)
 
 """
-macro delegateTyped2fields(sourceExemplar, field1, field2, targets)
+macro delegate2fieldsTyped(sourceExemplar, field1, field2, targets)
   typesname = esc( :($sourceExemplar) )
   field1name = esc(Expr(:quote, field1))
   field2name = esc(Expr(:quote, field2))
@@ -295,9 +295,9 @@ macro delegateTyped2fields(sourceExemplar, field1, field2, targets)
 end
 
 """
-see help for @delegateTyped2fields
+see help for @delegate2fieldsTyped
 """
-macro delegateTyped3fields(sourceExemplar, field1, field2, field3, targets)
+macro delegate3fieldsTyped(sourceExemplar, field1, field2, field3, targets)
   typesname = esc( :($sourceExemplar) )
   field1name = esc(Expr(:quote, field1))
   field2name = esc(Expr(:quote, field2))
