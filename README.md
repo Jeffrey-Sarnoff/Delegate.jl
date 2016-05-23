@@ -81,7 +81,7 @@ Delegate unary, binary, trinary functions into fields of a type.
         hi = a + b
         t = hi - a
         lo = (a - (hi - t)) + (b - t)
-        hi,lo
+        hi, lo
     end
     
     type HiLo  hi::Float64; lo::Float64;   end;
