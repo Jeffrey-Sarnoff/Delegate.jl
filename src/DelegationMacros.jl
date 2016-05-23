@@ -3,7 +3,7 @@
     (see end of file for source code refs)
 =#
 
-"""
+@doc"""
     macros for doing delegation
     import Base: length, last, (abs), (+)
     
@@ -48,7 +48,7 @@
       last(myInts)  # 1
       last(myNums)  # 3.0
 """
-module Delegation
+module DelegationMacros
 
 export @delegate, @delegate2, @delegateTyped, @delegateTyped2
 
