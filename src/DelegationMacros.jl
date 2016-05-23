@@ -273,7 +273,8 @@ A macro for type field delegation with an iso-typed result over two fields of T 
   
   Allows
   
-    myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ) # (8012.888888888,4.440892098500626e-14)
+    myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ) # HiLo(8012.89,4.44089e-14)
+    showall(myHiLo) # (8012.888888888,4.440892098500626e-14)
 
 """
 macro delegateTyped2fields(sourceExemplar, field1, field2, targets)
