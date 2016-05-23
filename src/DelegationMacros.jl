@@ -175,7 +175,7 @@ end
 
 """
 
-A macro for type field delegation with a type wrapped result over func{T}(arg::T)
+A macro for type field delegation with an iso-typed result over func{T}(arg::T)
     
   This
 
@@ -214,7 +214,7 @@ end
 
 """
 
-A macro for type field delegation with a type wrapped result over func{T}(arg1::T, arg2::T)
+A macro for type field delegation with an iso-typed result over func{T}(arg1::T, arg2::T)
 
   This
 
@@ -255,26 +255,45 @@ end
 
 """
 
-A macro for type field delegation with a type wrapped result over two fields of T func{T}(arg::T)
+A macro for type field delegation with an iso-typed result over two fields of T func{T}(arg::T)
 
   This
 
-    import Base: (+), (-), (*)
-    
-    type MyInt  val::Int  end;
+    function renormalize(a::Float64, b::Float64)
+        hi = a + b
+        t = hi - a
+        lo = (a - (hi - t)) + (b - t)
+        hi,lo
+    end
 
-    @delegateTyped2 MyInt.val [ (+), (-), (*) ];
+    type HiLo  hi::Float64; lo::Float64;   end;
+    
+
+    @delegateTyped2fields HiLo hi lo [ renormalize, ];
   
   Allows
   
-    myFirstInt   = MyInt(3)
-    mySecondInt  = MyInt(7)
-
-    myIntAdds       = myFirstInt + mySecondInt    # MyInt(10)
-    myIntSubtracts  = myFirstInt - mySecondInt    # MyInt(-4)
-    myIntMultiplies = myFirstInt * mySecondInt    # MyInt(21) 
+    myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ) # (8012.888888888,4.440892098500626e-14)
 
 """
+macro delegate2fields(sourceExemplar, field1, field2, targets)
+  typesname = esc( :($sourceExemplar) )
+  field1name = esc(Expr(:quote, field1))
+  field2name = esc(Expr(:quote, field2))
+  funcnames = targets.args
+  n = length(funcnames)
+  fdefs = Array(Any, n)
+  for i in 1:n
+    funcname = esc(funcnames[i])
+    fdefs[i] = quote
+                 ($funcname)(a::($typesname), args...) = 
+                    ($typesname)( ($funcname)(getfield(a, ($field1name)), getfield(a, ($field2name)), args...) )
+               end
+    end
+  return Expr(:block, fdefs...)
+end
+
+#=
 macro delegateTyped2fields(sourceExemplar, field1, field2, targets)
   typesname = esc( :($sourceExemplar) )
   field1name = esc(Expr(:quote, field1))
@@ -291,6 +310,7 @@ macro delegateTyped2fields(sourceExemplar, field1, field2, targets)
     end
   return Expr(:block, fdefs...)
 end
+=#
 
 
 
