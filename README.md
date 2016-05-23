@@ -18,7 +18,6 @@ Delegate unary, binary, trinary functions into fields of a type.
     
 ## Use
 
-Please see the online help for each macro, or read the source file, for more examples.
 
 ```julia
     import Base: length, last
@@ -76,3 +75,5 @@ Please see the online help for each macro, or read the source file, for more exa
     myIntSubtracts  = myFirstInt - mySecondInt    # MyInt(-4)
     myIntMultiplies = myFirstInt * mySecondInt    # MyInt(21) 
 ```    
+
+Please see the online help for each macro, or read the source file, for more examples.
