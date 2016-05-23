@@ -28,9 +28,6 @@ export @delegate, @delegate2, @delegateTyped, @delegateTyped2
   
     and allows
 
-      myInts = MyInts([5, 4, 3, 2, 1])
-      myNums = MyNums([1.0, 2.0, 3.0])
-      
       length(myInts) # 5
       length(myNums) # 3
       
@@ -81,9 +78,6 @@ end
   
     and allows
 
-      myInts = MyInts([5, 4, 3, 2, 1])
-      myNums = MyNums([1.0, 2.0, 3.0])
-      
       length(myInts) # 5
       length(myNums) # 3
       
