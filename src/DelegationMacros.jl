@@ -119,7 +119,7 @@ end
       last(myInts)  # 1
       last(myNums)  # 3.0
       
-"""->@delgate
+"""->@delegate
 
 
 #=
