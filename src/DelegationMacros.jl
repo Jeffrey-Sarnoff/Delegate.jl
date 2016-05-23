@@ -21,11 +21,8 @@ export @delegate, @delegate2, @delegateTyped, @delegateTyped2
        
     Allows
 
-      length(myInts) # 5
-      length(myNums) # 3
-      
-      last(myInts)   # 1
-      last(myNums)   # 3.0
+      length(myInts), length(myNums) # 5, 3
+      last(myInts), last(myNums)     # 1, 3.0
 
 """     
 macro delegate(source, targets)
