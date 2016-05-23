@@ -37,6 +37,20 @@ Please see the online help for each macro, or read the source file, for more exa
 ```
 
 ```julia
+    import Base: (<), (<=)
+    
+    type MyInt  val::Int  end;
+
+    @delegate2 MyInt.val [ (<), (<=) ];
+  
+    myFirstInt  = MyInt(3)
+    mySecondInt = MyInt(7)
+    
+    myFirstInt  <  mySecondInt  # true
+    mySecondInt <= myFirstInt   # false
+```    
+
+```julia
     import Base: hypot
     
     type RightTriangle   legA::Float64; legB::Float64;  end;
