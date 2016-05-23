@@ -48,6 +48,8 @@
       last(myInts)  # 1
       last(myNums)  # 3.0
 """
+module DelegationMacros
+
 macro delegate(source, targets)
   typename = esc(source.args[1])
   fieldname = esc(Expr(:quote, source.args[2].args[1]))
@@ -118,6 +120,8 @@ macro delegateTyped2(sourceExemplar, targets)
     end
   return Expr(:block, fdefs...)
 end
+
+end module # DelegationMacros
 
 #=
     initial implementation
