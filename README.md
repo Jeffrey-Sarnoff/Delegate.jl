@@ -1,4 +1,4 @@
-## DelegationMacros.jl
+## Delegate.jl
 
 Delegate unary, binary, trinary functions over a field in values of a type.  
 
