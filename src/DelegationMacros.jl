@@ -4,7 +4,8 @@ export @delegate, @delegate2, @delegateTyped, @delegateTyped2
 
 """
 
-    macros for doing delegation
+    macro for type field delegation over func{T}(arg::T)
+    
     import Base: length, last
     
     Given these types
@@ -54,7 +55,8 @@ end
 
 """
 
-    macros for doing delegation
+    a macro for type field delegation over func{T}(arg1::T, arg2::T)
+    
     import Base: length, last
     
     Given these types
@@ -106,7 +108,8 @@ end
 
 """
 
-    macros for doing type re-wrapped delegation
+    a macro for type field delegation with a type wrapped result over func{T}(arg::T)
+    
     import Base: (abs), (+)
     
     Given the type
@@ -153,7 +156,8 @@ end
 
 """
 
-    macros for doing type re-wrapped delegation
+    a macro for type field delegation with a type wrapped result over func{T}(arg1::T, arg2::T)
+    
     import Base: (abs), (+)
     
     Given the type
