@@ -276,7 +276,7 @@ A macro for type field delegation with an iso-typed result over two fields of T 
     myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ) # (8012.888888888,4.440892098500626e-14)
 
 """
-macro delegate2fields(sourceExemplar, field1, field2, targets)
+macro delegateTyped2fields(sourceExemplar, field1, field2, targets)
   typesname = esc( :($sourceExemplar) )
   field1name = esc(Expr(:quote, field1))
   field2name = esc(Expr(:quote, field2))
