@@ -99,7 +99,7 @@ A macro for type field delegation over two fields of T func{T}(arg::T)
     
     type RightTriangle   legA::Float64; legB::Float64;  end;
 
-    @delegate2fields RightTriangle.legA RightTriangle.legB [ hypot, ];
+    @delegate2fields RightTriangle legA legB [ hypot, ];
   
   Allows
   
@@ -108,17 +108,17 @@ A macro for type field delegation over two fields of T func{T}(arg::T)
     hypot(myRightTriangle)   #  5.0
     
 """     
-macro delegate2fields(sourceExemplar1, sourceExemplar2, targets)
+macro delegate2fields(sourceExemplar, field1name, field2name, targets)
   typesname = esc(sourceExemplar1.args[1])
-  field1name = esc(Expr(:quote, sourceExemplar1.args[2].args[1]))
-  field2name = esc(Expr(:quote, sourceExemplar2.args[2].args[1]))
+  field1name = esc(Expr(:quote, field1name))
+  field2name = esc(Expr(:quote, field2name))
   funcnames = targets.args
   n = length(funcnames)
   fdefs = Array(Any, n)
   for i in 1:n
     funcname = esc(funcnames[i])
     fdefs[i] = quote
-                 ($funcname)(a::($typesname), b::($typesname), args...) = 
+                 ($funcname)(a::($typesname), args...) = 
                    ($funcname)(getfield(a,($field1name)), getfield(a,($field2name)), args...)
                end
     end
