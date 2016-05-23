@@ -48,7 +48,7 @@
       last(myInts)  # 1
       last(myNums)  # 3.0
 """
-module DelegationMacros
+module Delegation
 
 export @delegate, @delegate2, @delegateTyped, @delegateTyped2
 
