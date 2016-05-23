@@ -12,8 +12,8 @@ Delegate unary, binary, trinary functions into fields of a type.
     @delegate, @delegate2, 
     @delegate2fields, @delegate3fields,
     
-    @delegateTyped, @delegateTyped2, 
-    @delegateTyped2fields, @delegateTyped3fields
+    @delegateTyped, @delegate2Typed, 
+    @delegate2fieldsTyped, @delegate3fieldsTyped
 
     
 ## Use
@@ -66,7 +66,7 @@ Delegate unary, binary, trinary functions into fields of a type.
     
     type MyInt  val::Int  end;
 
-    @delegateTyped2 MyInt.val [ (+), (-), (*) ];
+    @delegate2Typed MyInt.val [ (+), (-), (*) ];
 
     myFirstInt   = MyInt(3)
     mySecondInt  = MyInt(7)
@@ -86,7 +86,7 @@ Delegate unary, binary, trinary functions into fields of a type.
     
     type HiLo  hi::Float64; lo::Float64;   end;
     
-    @delegateTyped2fields HiLo hi lo [ renormalize, ];
+    @delegate2fieldsTyped HiLo hi lo [ renormalize, ];
   
     myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ) # HiLo(8012.89,4.44089e-14)
     showall(myHiLo)                                            # HiLo(8012.888888888,4.440892098500626e-14)
