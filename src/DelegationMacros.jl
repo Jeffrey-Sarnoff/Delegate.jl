@@ -87,7 +87,7 @@ macro delegate2(sourceExemplar, targets)
 end
 
 
-# for methods that take two equi-typed source arguments
+# for methods that use multiple fields from the source type
 
 """
 
@@ -119,12 +119,55 @@ macro delegate2fields(sourceExemplar, field1, field2, targets)
     funcname = esc(funcnames[i])
     fdefs[i] = quote
                  ($funcname)(a::($typesname), args...) = 
-                   ($funcname)(getfield(a, ($field1name)), getfield(a, Symbol($field2name)), args...)
+                   ($funcname)(getfield(a, ($field1name)), getfield(a, ($field2name)), args...)
                end
     end
   return Expr(:block, fdefs...)
 end
 
+"""
+
+A macro for type field delegation over three fields of T func{T}(arg::T)
+    
+  This
+
+    function add3{T<:Float64}(a::T, b::T, c::T)
+        ab   = a+b
+        hi   = ab+c
+        lo   = a-(ab-b)
+        lo  += b-(ab-a)
+        lo  += c-(hi-ab)
+        hi, lo
+    end    
+    
+    type ThreeFloats a::Float64; B::Float64;  C::Float64;  end;
+
+    @delegate3fields ThreeFloats a b c [ add3, ];
+  
+  Allows
+  
+    myThreeFloats = ThreeFloats( sqrt(2.), sqrt(22.), sqrt(15.) )
+    
+    add3(myThreeFloats)   #  (9.977612668403943,-6.661338147750939e-16)
+    
+"""     
+macro delegate3fields(sourceExemplar, field1, field2, field3, targets)
+  typesname = esc( :($sourceExemplar) )
+  field1name = esc(Expr(:quote, field1))
+  field2name = esc(Expr(:quote, field2))
+  field3name = esc(Expr(:quote, field3))
+  funcnames = targets.args
+  n = length(funcnames)
+  fdefs = Array(Any, n)
+  for i in 1:n
+    funcname = esc(funcnames[i])
+    fdefs[i] = quote
+                 ($funcname)(a::($typesname), args...) = 
+                   ($funcname)(getfield(a, ($field1name)), getfield(a, ($field2name)), getfield(a, ($field3name)), args...)
+               end
+    end
+  return Expr(:block, fdefs...)
+end
 
 
 # for methods that take one typed argument and return an iso-typed result
@@ -205,6 +248,49 @@ macro delegateTyped2(sourceExemplar, targets)
     end
   return Expr(:block, fdefs...)
 end
+
+
+# for methods that use two fields of the source type and return an iso-typed result
+
+"""
+
+A macro for type field delegation with a type wrapped result over two fields of T func{T}(arg::T)
+
+  This
+
+    import Base: (+), (-), (*)
+    
+    type MyInt  val::Int  end;
+
+    @delegateTyped2 MyInt.val [ (+), (-), (*) ];
+  
+  Allows
+  
+    myFirstInt   = MyInt(3)
+    mySecondInt  = MyInt(7)
+
+    myIntAdds       = myFirstInt + mySecondInt    # MyInt(10)
+    myIntSubtracts  = myFirstInt - mySecondInt    # MyInt(-4)
+    myIntMultiplies = myFirstInt * mySecondInt    # MyInt(21) 
+
+"""
+macro delegateTyped2fields(sourceExemplar, field1, field2, targets)
+  typesname = esc( :($sourceExemplar) )
+  field1name = esc(Expr(:quote, field1))
+  field2name = esc(Expr(:quote, field2))
+  funcnames = targets.args
+  n = length(funcnames)
+  fdefs = Array(Any, n)
+  for i in 1:n
+    funcname = esc(funcnames[i])
+    fdefs[i] = quote
+                 ($funcname)(a::($typesname), args...) = 
+                   ($typesname)( ($funcname)(getfield(a, ($field1name)), getfield(a, ($field2name)), args...) )
+               end
+    end
+  return Expr(:block, fdefs...)
+end
+
 
 
 end # module DelegationMacros
