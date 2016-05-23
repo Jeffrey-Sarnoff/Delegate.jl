@@ -1,2 +1,8 @@
 ## DelegationMacros.jl
-Delegate unary and binary functions into type fields, with result either unwrapped or type re-wrapped.
+
+Delegate unary, binary, trinary functions over a field in values of a type.  
+
+Delegate unary, binary, trinary functions into fields of a type.
+
+    The results may be `bare`, having the return type of delegated function.  
+    The results may be `re-wrapped`, returning a value of the same type being processed.
