@@ -74,7 +74,7 @@ macro delegateTyped2(sourceExemplar, targets)
 end
 
 
-"""
+@doc"""
     macros for doing delegation
     import Base: length, last, (abs), (+)
     
@@ -118,7 +118,7 @@ end
       
       last(myInts)  # 1
       last(myNums)  # 3.0
-"""->DelegationMacros
+"""->@delegate
 
 #=
     based on original work by John Myles White and Toivo Henningsson
