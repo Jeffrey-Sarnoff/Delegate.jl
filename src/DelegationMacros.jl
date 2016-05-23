@@ -105,8 +105,8 @@ A macro for type field delegation with a type wrapped result over func{T}(arg::T
   
     myFirstInt  = MyInt(3)
 
-    myFirstNegativeInt  = -myFirstInt              # MyInt(-3)
-    myFirstIntRecovered = abs(myFirstNegativeInt)  # MyInt( 3)    
+    myIntNegates   = -myFirstInt              # MyInt(-3)
+    myIntAbsValues = abs(myFirstNegativeInt)  # MyInt( 3)    
 
 """
 macro delegateTyped(source, targets)
