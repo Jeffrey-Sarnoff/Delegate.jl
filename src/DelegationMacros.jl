@@ -4,7 +4,7 @@ export @delegate, @delegate2, @delegateTyped, @delegateTyped2
 
 """
 
-    _a macro for type field delegation over func{T}(arg::T)_
+    `a macro for type field delegation over func{T}(arg::T)`
     
     This
     
