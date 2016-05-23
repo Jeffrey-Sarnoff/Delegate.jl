@@ -73,8 +73,8 @@ macro delegateTyped2(sourceExemplar, targets)
   return Expr(:block, fdefs...)
 end
 
-
-@doc"""
+#=
+"""
 
     macros for doing delegation
     import Base: length, last, (abs), (+)
@@ -120,7 +120,8 @@ end
       last(myInts)  # 1
       last(myNums)  # 3.0
       
-"""->@delegate
+"""
+=#
 
 #=
     based on original work by John Myles White and Toivo Henningsson
