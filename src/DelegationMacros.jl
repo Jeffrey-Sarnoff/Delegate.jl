@@ -2,6 +2,13 @@ module DelegationMacros
 
 export @delegate, @delegate2, @delegateTyped, @delegateTyped2
 
+#=
+    based on original work by John Myles White and Toivo Henningsson
+    (see the end of this file for source code references)
+=#
+
+
+
 """
 
 A macro for type field delegation over func{T}(arg::T)
@@ -13,8 +20,8 @@ A macro for type field delegation over func{T}(arg::T)
     type MyInts     elems::Vector{Int} end;
     type MyNums{T}  elems::Vector{T}   end;
 
-    @delegate MyInts.elems [ length,  last ]
-    @delegate MyNums.elems [ length,  last ]
+    @delegate MyInts.elems [ length,  last ];
+    @delegate MyNums.elems [ length,  last ];
        
   Allows
 
@@ -52,7 +59,7 @@ A macro for type field delegation over func{T}(arg1::T, arg2::T)
     
     type MyInt  val::Int  end;
 
-    @delegate2 MyInt.val [ (<), (<=) ]
+    @delegate2 MyInt.val [ (<), (<=) ];
   
   Allows
   
@@ -92,7 +99,7 @@ A macro for type field delegation with a type wrapped result over func{T}(arg::T
     
     type MyInt  val::Int  end;
 
-    @delegateTyped MyInt.val [ (-), abs ]
+    @delegateTyped MyInt.val [ (-), abs ];
   
   Allows
   
@@ -157,63 +164,6 @@ macro delegateTyped2(sourceExemplar, targets)
     end
   return Expr(:block, fdefs...)
 end
-
-
-
-#=
-"""
-
-    macros for doing delegation
-    import Base: length, last, (abs), (+)
-    
-    Given these types
-    
-       type MyInt          type MyInts                   type MyNums{T}
-          i::Int              elems::Vector{Int}           elems::T
-       end                 end                           end
-        
-    These macro calls
- 
-       @delegateTyped MyInt.i      [ abs, ]
-       @delegateTyped2 MyInt.i     [ (+), ]
-       
-       @delegate MyInts.elems [ length,  last ]
-       @delegate MyNums.elems [ length,  last ]
-       
-    produces these blocks of expressions
- 
-      abs(a::MyInt)           = MyInt( abs( getfield(a, :i) ) )
-      (+)(a::MyInt, b::MyInt) = MyInt( (+)( getfield(a, :i), getfield(b, :i) ) ) 
- 
-      last( a::MyInts)  = last( getfield(a, :elems) )
-      length(a::MyInts) = length( getfield(a, :elems) )
- 
-      last( a::MyNums)  = last( getfield(a, :elems) )
-      length(a::MyNums) = length( getfield(a, :elems) )
-  
-    and allows
-    
-      myFirstInt = MyInt(-1)
-      mySecondInt = MyInt(2)
-      abs(myFirstInt)          # MyInt(1)
-      myFirstInt + mySecondInt # MyInt(1)
-      
-      myInts = MyInts([5, 4, 3, 2, 1])
-      myNums = MyNums([1.0, 2.0, 3.0])
-      
-      length(myInts) # 5
-      length(myNums) # 3
-      
-      last(myInts)  # 1
-      last(myNums)  # 3.0
-      
-"""
-=#
-
-#=
-    based on original work by John Myles White and Toivo Henningsson
-    (see end of file for source code refs)
-=#
 
 
 end # module DelegationMacros
