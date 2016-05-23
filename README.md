@@ -9,10 +9,10 @@ Delegate unary, binary, trinary functions into fields of a type.
 
 ## exports
 
-    @delegate, @delegate2, 
+    @delegate, @delegate2vars, 
     @delegate2fields, @delegate3fields,
     
-    @delegateTyped, @delegate2Typed, 
+    @delegateTyped, @delegate2varsTyped, 
     @delegate2fieldsTyped, @delegate3fieldsTyped
 
     
@@ -40,7 +40,7 @@ Delegate unary, binary, trinary functions into fields of a type.
     
     type MyInt  val::Int  end;
 
-    @delegate2 MyInt.val [ (<), (<=) ];
+    @delegate2vars MyInt.val [ (<), (<=) ];
   
     myFirstInt  = MyInt(3)
     mySecondInt = MyInt(7)
@@ -66,7 +66,7 @@ Delegate unary, binary, trinary functions into fields of a type.
     
     type MyInt  val::Int  end;
 
-    @delegate2Typed MyInt.val [ (+), (-), (*) ];
+    @delegate2varsTyped MyInt.val [ (+), (-), (*) ];
 
     myFirstInt   = MyInt(3)
     mySecondInt  = MyInt(7)
