@@ -1,6 +1,6 @@
 module DelegationMacros
 
-export @delegate, @delegate2, @delegateTyped, @delegateTyped2
+export @delegate, @delegate2, @delegate2fields, @delegateTyped, @delegateTyped2
 
 #=
     based on original work by John Myles White and Toivo Henningsson
@@ -85,6 +85,46 @@ macro delegate2(sourceExemplar, targets)
     end
   return Expr(:block, fdefs...)
 end
+
+
+# for methods that take two equi-typed source arguments
+
+"""
+
+A macro for type field delegation over two fields of T func{T}(arg::T)
+    
+  This
+
+    import Base: hypot
+    
+    type RightTriangle   legA::Float64; legB::Float64;  end;
+
+    @delegate2fields RightTriangle.legA RightTriangle.legB [ hypot, ];
+  
+  Allows
+  
+    myRightTriangle  = RightTriangle( 3.0, 4.0 )
+    
+    hypot(myRightTriangle)   #  5.0
+    
+"""     
+macro delegate2fields(sourceExemplar1, sourceExemplar2, targets)
+  typesname = esc(sourceExemplar1.args[1])
+  field1name = esc(Expr(:quote, sourceExemplar1.args[2].args[1]))
+  field2name = esc(Expr(:quote, sourceExemplar2.args[2].args[1]))
+  funcnames = targets.args
+  n = length(funcnames)
+  fdefs = Array(Any, n)
+  for i in 1:n
+    funcname = esc(funcnames[i])
+    fdefs[i] = quote
+                 ($funcname)(a::($typesname), b::($typesname), args...) = 
+                   ($funcname)(getfield(a,($fiel1dname)), getfield(a,($field2name)), args...)
+               end
+    end
+  return Expr(:block, fdefs...)
+end
+
 
 
 # for methods that take one typed argument and return an iso-typed result
