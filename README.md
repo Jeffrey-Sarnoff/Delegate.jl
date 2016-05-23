@@ -61,3 +61,18 @@ Please see the online help for each macro, or read the source file, for more exa
     
     hypot(myRightTriangle)   #  5.0
 ```    
+
+```julia
+    import Base: (+), (-), (*)
+    
+    type MyInt  val::Int  end;
+
+    @delegateTyped2 MyInt.val [ (+), (-), (*) ];
+
+    myFirstInt   = MyInt(3)
+    mySecondInt  = MyInt(7)
+
+    myIntAdds       = myFirstInt + mySecondInt    # MyInt(10)
+    myIntSubtracts  = myFirstInt - mySecondInt    # MyInt(-4)
+    myIntMultiplies = myFirstInt * mySecondInt    # MyInt(21) 
+```    
