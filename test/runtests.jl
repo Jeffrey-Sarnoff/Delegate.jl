@@ -20,8 +20,8 @@ end;
 
 
 
-a = MyInt(3)
-b = MyInt(7)
+a = AnInt(3)
+b = AnInt(7)
 
 @test iseven(a) == false
 @test isodd(b)  == true
@@ -33,9 +33,9 @@ b = MyInt(7)
 @test (a <  b) == true
 @test (b <= a) == false
 
-@test (a + b) == MyInt(10)
-@test (a - b) == MyInt(-4)
-@test (a * b) == MyInt(21)
+@test (a + b) == AnInt(10)
+@test (a - b) == AnInt(-4)
+@test (a * b) == AnInt(21)
 
 
 
