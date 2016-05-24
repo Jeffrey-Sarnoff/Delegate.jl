@@ -27,28 +27,28 @@ A macro for type field delegation over func{T}(arg::T)
     type MyInts     elems::Vector{Int} end;
     type MyNums{T}  elems::Vector{T}   end;
 
-    @delegateInto_1field1var MyInts.elems [ length,  last ];
-    @delegateInto_1field1var MyNums.elems [ length,  last ];
+    @delegateInto_1field1var MyInts elems [ length,  last ];
+    @delegateInto_1field1var MyNums elems [ length,  last ];
        
   # Allows
 
     myInts = MyInts([5, 4, 3, 2, 1]);
     myNums = MyNums([1.0, 2.0, 3.0]);
     
-    length(myInts), length(myNums) # 5, 3
-    last(myInts), last(myNums)     # 1, 3.0
+    length(myInts), length(myNums)   # 5, 3
+    last(myInts),   last(myNums)     # 1, 3.0
 
-"""     
-macro delegateInto_1field1var(sourcetype, targets)
-  typename = esc(sourcetype.args[1])
-  fieldname = esc(Expr(:quote, sourcetype.args[2].args[1]))
+"""
+macro delegateInto_1field1var(sourcetype, field1, targets)
+  typesname = esc( :($sourcetype) )
+  field1name = esc(Expr(:quote, field1))
   funcnames = targets.args
   n = length(funcnames)
   fdefs = Array(Any, n)
   for i in 1:n
     funcname = esc(funcnames[i])
     fdefs[i] = quote
-                 ($funcname)(a::($typename), args...) = ($funcname)(getfield(a,($fieldname)), args...)
+                 ($funcname)(a::($typesname), args...) = ($funcname)(getfield(a,($fieldname)), args...)
                end
     end
   return Expr(:block, fdefs...)
