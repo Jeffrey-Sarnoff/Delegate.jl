@@ -221,7 +221,7 @@ macro delegateWith_1field1var(sourcetype, targets)
 end
 
 macro delegateWrapped(sourcetype, targets)
-    @delegateWith_1field1var(sourcetype, targets)
+    esc(:( @delegateWith_1field1var(sourcetype, targets) ))
 end    
 
 
