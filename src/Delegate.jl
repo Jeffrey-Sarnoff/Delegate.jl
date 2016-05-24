@@ -1,13 +1,16 @@
 module Delegate
 
-export @delegateInto_1field1var,   @delegateInto_1field2vars,
-       @delegateInto_2fields1var,  @delegateInto_3fields1var,
-       @delegateInto_2fields2vars,
-       @delegate,
-       @delegateWith_1field1var,   @delegateWith_1field2vars,
-       @delegateWith_2fields1var,  @delegateWith_3fields1var,
-       @delegateWith_2fields2vars,
-       @delegateWrapped
+export @delegateInto_1field1var   ,  @delegate1f1v,     @delegate,  # aliases for @delegateInto_1field1var
+       @delegateInto_1field2vars  ,  @delegate1f2v,
+       @delegateInto_2fields1var  ,  @delegate2f1v,
+       @delegateInto_3fields1var  ,  @delegate3f1v,
+       @delegateInto_2fields2vars ,  @delegate2f2v,
+       @delegateWith_1field1var   ,  @delegateWrap1f1v, @delegateWrap,  # aliases for @delegateWith_1field1var
+       @delegateWith_1field2vars  ,  @delegateWrap1f2v,
+       @delegateWith_2fields1var  ,  @delegateWrap2f1v,
+       @delegateWith_3fields1var  ,  @delegateWrap3f1v,
+       @delegateWith_2fields2vars ,  @delegateWrap2f2v
+       
 
 #=
     based on original work by John Myles White and Toivo Henningsson
@@ -50,20 +53,23 @@ macro delegateInto_1field1var(sourcetype, field1, targets)
   return Expr(:block, fdefs...)
 end
 
+"""
+see @delegateInto_1field1var
+"""
 macro delegate(sourcetype, field1, targets)
-  typesname  = esc( :($sourcetype) )
-  field1name = esc(Expr(:quote, field1))
-  funcnames  = targets.args
-  n = length(funcnames)
-  fdefs = Array(Any, n)
-  for i in 1:n
-    funcname = esc(funcnames[i])
-    fdefs[i] = quote
-                 ($funcname)(a::($typesname), args...) = ($funcname)(getfield(a,($field1name)), args...)
-               end
+    quote
+        @delegateInto_1field1var($sourcetype, $field1, $targets)
     end
-  return Expr(:block, fdefs...)
-end    
+end
+
+"""
+see @delegateInto_1field1var
+"""
+macro delegate1f1v(sourcetype, field1, targets)
+    quote
+        @delegateInto_1field1var($sourcetype, $field1, $targets)
+    end
+end
 
 # for methods that take two equi-typed source arguments
 
@@ -100,6 +106,15 @@ macro delegateInto_1field2vars(sourcetype, field1, targets)
   return Expr(:block, fdefs...)
 end
 
+"""
+see @delegateInto_1field2vars
+"""
+macro delegate1f2v(sourcetype, field1, targets)
+    quote
+        @delegateInto_1field2vars($sourcetype, $field1, $targets)
+    end
+end
+
 # for methods that use multiple fields from the source type
 
 """
@@ -133,6 +148,16 @@ macro delegateInto_2fields1var(sourcetype, field1, field2, targets)
     end
   return Expr(:block, fdefs...)
 end
+
+"""
+see @delegateInto_2fieldsd1var
+"""
+macro delegate2f1v(sourcetype, field1, field2, targets)
+    quote
+        @delegateInto_2field1var($sourcetype, $field1, $field2, $targets)
+    end
+end
+
 
 """
 
@@ -174,6 +199,48 @@ macro delegateInto_3fields1var(sourcetype, field1, field2, field3, targets)
   return Expr(:block, fdefs...)
 end
 
+"""
+see @delegateInto_3fields1var
+"""
+macro delegate3f1v(sourcetype, field1, field2, field3, targets)
+    quote
+        @delegateInto_1field2vars($sourcetype, $field1, $field2, $field3, $targets)
+    end
+end
+
+
+"""
+see help for @delegateInto_1field2vars
+"""
+macro delegateInto_2fields2vars(sourcetype, field1, field2, targets)
+  typesname  = esc( :($sourcetype) )
+  field1name = esc(Expr(:quote, field1))
+  field2name = esc(Expr(:quote, field2))
+  funcnames  = targets.args
+  n = length(funcnames)
+  fdefs = Array(Any, n)
+  for i in 1:n
+    funcname = esc(funcnames[i])
+    fdefs[i] = quote
+                 ($funcname)(a::($typesname), b::($typesname), args...) = 
+                     ($funcname)(getfield(a, ($field1name)), getfield(a, ($field2name)),
+                                 getfield(b, ($field1name)), getfield(b, ($field2name)), 
+                                 args...)
+               end
+    end
+  return Expr(:block, fdefs...)
+end
+
+"""
+see @delegateInto_2fields2vars
+"""
+macro delegate2f2v(sourcetype, field1, field2, targets)
+    quote
+        @delegateInto_2fields2vars($sourcetype, $field1, $field2, $targets)
+    end
+end
+
+
 
 # for methods that take one typed argument and return an iso-typed result
 
@@ -209,22 +276,24 @@ macro delegateWith_1field1var(sourcetype, field1, targets)
   return Expr(:block, fdefs...)
 end
 
-macro delegateWrapped(sourcetype, field1, targets)
-  typesname  = esc( :($sourcetype) )
-  field1name = esc(Expr(:quote, field1))
-  funcnames  = targets.args
-  n = length(funcnames)
-  fdefs = Array(Any, n)
-  for i in 1:n
-    funcname = esc(funcnames[i])
-    fdefs[i] = quote
-                 ($funcname)(a::($typesname), args...) = 
-                   ($typesname)( ($funcname)(getfield(a,($field1name)), args...) )
-               end
+"""
+see @delegateWith_1field1var
+"""
+macro delegateWrap(sourcetype, field1, targets)
+    quote
+        @delegateWith_1field1var($sourcetype, $field1, $targets)
     end
-  return Expr(:block, fdefs...)
 end
 
+
+"""
+see @delegateWith_1field1var
+"""
+macro delegateWrap1f1v(sourcetype, field1, targets)
+    quote
+        @delegateWith_1field1var($sourcetype, $field1, $targets)
+    end
+end
 
 # for methods that take two equi-typed source arguments) and return an iso-typed result
 
@@ -260,6 +329,15 @@ macro delegateWith_1field2vars(sourcetype, field1, targets)
                end
     end
   return Expr(:block, fdefs...)
+end
+
+"""
+see @delegateWith_1field2vars
+"""
+macro delegateWrap1f2v(sourcetype, field1, targets)
+    quote
+        @delegateWith_1field2var($sourcetype, $field1, $targets)
+    end
 end
 
 
@@ -303,6 +381,16 @@ macro delegateWith_2fields1var(sourcetype, field1, field2, targets)
 end
 
 """
+see @delegateWith_2fields1var
+"""
+macro delegateWrap2f1v(sourcetype, field1, field2, targets)
+    quote
+        @delegateWith_2fields1var($sourcetype, $field1, $field2, $targets)
+    end
+end
+
+
+"""
 see help for @delegateWith_2fields1var
 """
 macro delegateWith_3fields1var(sourcetype, field1, field2, field3, targets)
@@ -325,26 +413,14 @@ end
 
 
 """
-see help for @delegateInto_1field2vars
+see @delegateWith_3fields1var
 """
-macro delegateInto_2fields2vars(sourcetype, field1, field2, targets)
-  typesname  = esc( :($sourcetype) )
-  field1name = esc(Expr(:quote, field1))
-  field2name = esc(Expr(:quote, field2))
-  funcnames  = targets.args
-  n = length(funcnames)
-  fdefs = Array(Any, n)
-  for i in 1:n
-    funcname = esc(funcnames[i])
-    fdefs[i] = quote
-                 ($funcname)(a::($typesname), b::($typesname), args...) = 
-                     ($funcname)(getfield(a, ($field1name)), getfield(a, ($field2name)),
-                                 getfield(b, ($field1name)), getfield(b, ($field2name)), 
-                                 args...)
-               end
+macro delegateWrap3f1v(sourcetype, field1, field2, field3, targets)
+    quote
+        @delegateWith_3fields1var($sourcetype, $field1, $field2, $field3, $targets)
     end
-  return Expr(:block, fdefs...)
 end
+
 
 """
 see help for @delegateWith_1field2vars
@@ -367,6 +443,17 @@ macro delegateWith_2fields2vars(sourcetype, field1, field2, targets)
     end
   return Expr(:block, fdefs...)
 end
+
+"""
+see @delegateWith_2fields2vars
+"""
+macro delegateWrap2f2v(sourcetype, field1, field2, targets)
+    quote
+        @delegateWith_2fields2vars($sourcetype, $field1, $field2, $targets)
+    end
+end
+
+
 
 
 end # module Delegate
