@@ -55,7 +55,18 @@ macro delegateInto_1field1var(sourcetype, targets)
 end
 
 macro delegate(sourcetype, targets)
-    esc(:( @delegateInto_1field1var(sourcetype, targets) ))
+  typename = esc(sourcetype.args[1])
+  fieldname = esc(Expr(:quote, sourcetype.args[2].args[1]))
+  funcnames = targets.args
+  n = length(funcnames)
+  fdefs = Array(Any, n)
+  for i in 1:n
+    funcname = esc(funcnames[i])
+    fdefs[i] = quote
+                 ($funcname)(a::($typename), args...) = ($funcname)(getfield(a,($fieldname)), args...)
+               end
+    end
+  return Expr(:block, fdefs...)
 end    
 
 # for methods that take two equi-typed source arguments
@@ -221,7 +232,19 @@ macro delegateWith_1field1var(sourcetype, targets)
 end
 
 macro delegateWrapped(sourcetype, targets)
-    esc(:( @delegateWith_1field1var(sourcetype, targets) ))
+  typename = esc(sourcetype.args[1])
+  fieldname = esc(Expr(:quote, sourcetype.args[2].args[1]))
+  funcnames = targets.args
+  n = length(funcnames)
+  fdefs = Array(Any, n)
+  for i in 1:n
+    funcname = esc(funcnames[i])
+    fdefs[i] = quote
+                 ($funcname)(a::($typename), args...) = 
+                   ($typename)( ($funcname)(getfield(a,($fieldname)), args...) )
+               end
+    end
+  return Expr(:block, fdefs...)
 end    
 
 
