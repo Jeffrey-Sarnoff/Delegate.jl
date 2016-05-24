@@ -55,7 +55,7 @@ macro delegateInto_1field1var(sourcetype, targets)
 end
 
 macro delegate(sourcetype, targets)
-    esc( @delegateInto_1field1var(sourcetype, targets) )
+    esc(:( @delegateInto_1field1var(sourcetype, targets) ))
 end    
 
 # for methods that take two equi-typed source arguments
