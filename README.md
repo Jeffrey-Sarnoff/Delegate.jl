@@ -5,7 +5,7 @@ Delegate unary, binary, trinary functions over a field in values of a type.
 Delegate unary, binary, trinary functions into fields of a type.
 
     The results may be `bare`, having the return type of delegated function.  
-    The results may be `re-wrapped`, returning a value of the same type being processed.
+    The results may be `re-wrapped`, returning a value of the same type processed.
 
 ## exports
 
@@ -88,8 +88,10 @@ Delegate unary, binary, trinary functions into fields of a type.
     
     @delegate2fieldsTyped HiLo hi lo [ renormalize, ];
   
-    myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ) # HiLo(8012.89,4.44089e-14)
-    showall(myHiLo)                                            # HiLo(8012.888888888,4.440892098500626e-14)
+    myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ) 
+    # HiLo(8012.89,4.44089e-14)
+    showall(myHiLo)                                            
+    # HiLo(8012.888888888,4.440892098500626e-14)
 ```
 
 Please see the online help for each macro, or read the source file, for more examples.
