@@ -2,12 +2,12 @@
 #### Delegate functions into type fields or over iso-typed vars, with plain or iso-typed result.
 
 
-Delegate unary, binary, trinary functions over a field in values of a type.  
+Delegate unary, binary, trinary functions over a field in 1,2,3 values of a type.  
 
-Delegate unary, binary, trinary functions into fields of a type.
+Delegate unary, binary, trinary functions into 1,2,3 fields of a type.
 
-    The results may be `bare`, having the return type of delegated function.  
-    The results may be `re-wrapped`, returning a value of the same type processed.
+    @delegate prefix: The result is `bare`, having the return type of delegated function.  
+    @traject  prefix: The result is `iso-typed`, returning a value of the same type processed.
 
 ## exports
 
@@ -30,7 +30,7 @@ Delegate unary, binary, trinary functions into fields of a type.
     @delegate1f1v      # aliases @delegate_1field1var
     @traject1f1v       # aliases @traject_1field1var
                        # others patterned as
-    @delgate1f2v       # aliases @traject_1field2vars       
+    @delgate1f2v       # aliases @delegate_1field2vars       
     @traject2f1v       # aliases @traject_2fields1var
     
 ## Use
