@@ -1,11 +1,11 @@
 module Delegate
 
-export @delegate_1field1var   ,  @delegate1f1v,     @delegate,  # aliases for @delegate_1field1var
+export @delegate_1field1var   ,  @delegate1f1v,   # aliases for @delegate_1field1var
        @delegate_1field2vars  ,  @delegate1f2v,
        @delegate_2fields1var  ,  @delegate2f1v,
        @delegate_3fields1var  ,  @delegate3f1v,
        @delegate_2fields2vars ,  @delegate2f2v,
-       @traject_1field1var    ,  @traject1f1v,      @traject,  # aliases for @traject_1field1var
+       @traject_1field1var    ,  @traject1f1v,    # aliases for @traject_1field1var
        @traject_1field2vars   ,  @traject1f2v,
        @traject_2fields1var   ,  @traject2f1v,
        @traject_3fields1var   ,  @traject3f1v,
@@ -56,9 +56,9 @@ end
 """
 see @delegate_1field1var
 """
-macro delegate(sourcetype, field1, targets)
+macro delegate1f1v(sourcetype, field1, targets)
     quote
-        @delegate_1field1var($sourcetype, $field1, $targets)
+        @delegate_1field1var($(esc(sourcetype)), $(esc(field1)), $(esc(targets)))
     end
 end
 
@@ -67,7 +67,7 @@ see @delegate_1field1var
 """
 macro delegate1f1v(sourcetype, field1, targets)
     quote
-        @delegate_1field1var($sourcetype, $field1, $targets)
+        @delegate_1field1var($(esc(sourcetype)), $(esc(field1)), $(esc(targets)))
     end
 end
 
@@ -111,7 +111,7 @@ see @delegate_1field2vars
 """
 macro delegate1f2v(sourcetype, field1, targets)
     quote
-        @delegate_1field2vars($sourcetype, $field1, $targets)
+        @delegate_1field2vars($(esc(sourcetype)), $(esc(field1)), $(esc(targets)))
     end
 end
 
@@ -153,7 +153,7 @@ see @delegate_2fieldsd1var
 """
 macro delegate2f1v(sourcetype, field1, field2, targets)
     quote
-        @delegate_2field1var($sourcetype, $field1, $field2, $targets)
+        @delegate_2field1var($(esc(sourcetype)), $(esc(field1)), $(esc(field2)), $(esc(targets)))
     end
 end
 
@@ -202,7 +202,7 @@ see @delegate_3fields1var
 """
 macro delegate3f1v(sourcetype, field1, field2, field3, targets)
     quote
-        @delegate_1field2vars($sourcetype, $field1, $field2, $field3, $targets)
+        @delegate_3fields1var($(esc(sourcetype)), $(esc(field1)), $(esc(field2)), $(esc(field3)), $(esc(targets)))
     end
 end
 
@@ -234,7 +234,7 @@ see @delegate_2fields2vars
 """
 macro delegate2f2v(sourcetype, field1, field2, targets)
     quote
-        @delegate_2fields2vars($sourcetype, $field1, $field2, $targets)
+        @delegate_2fields2vars($(esc(sourcetype)), $(esc(field1)), $(esc(field2)), $(esc(targets)))
     end
 end
 
@@ -276,21 +276,13 @@ end
 """
 see @traject_1field1var
 """
-macro traject(sourcetype, field1, targets)
-    quote
-        @traject_1field1var($sourcetype, $field1, $targets)
-    end
-end
-
-
-"""
-see @traject_1field1var
-"""
 macro traject1f1v(sourcetype, field1, targets)
     quote
-        @traject_1field1var($sourcetype, $field1, $targets)
+        @traject_1field1var($(esc(sourcetype)), $(esc(field1)), $(esc(targets)))
     end
 end
+
+
 
 # for methods that take two equi-typed source arguments) and return an iso-typed result
 
@@ -333,7 +325,7 @@ see @traject_1field2vars
 """
 macro traject1f2v(sourcetype, field1, targets)
     quote
-        @traject_1field2var($sourcetype, $field1, $targets)
+        @traject_1field2var($(esc(sourcetype)), $(esc(field1)), $(esc(targets)))
     end
 end
 
@@ -380,7 +372,7 @@ see @traject_2fields1var
 """
 macro traject2f1v(sourcetype, field1, field2, targets)
     quote
-        @traject_2fields1var($sourcetype, $field1, $field2, $targets)
+        @traject_2fields1var($(esc(sourcetype)), $(esc(field1)), $(esc(field2)), $(esc(targets)))
     end
 end
 
@@ -412,7 +404,7 @@ see @traject_3fields1var
 """
 macro traject3f1v(sourcetype, field1, field2, field3, targets)
     quote
-        @traject_3fields1var($sourcetype, $field1, $field2, $field3, $targets)
+        @traject_3fields1var($(esc(sourcetype)), $(esc(field1)), $(esc(field2)), $(esc(field3)), $(esc(targets)))
     end
 end
 
@@ -444,7 +436,7 @@ see @traject_2fields2vars
 """
 macro traject2f2v(sourcetype, field1, field2, targets)
     quote
-        @traject_2fields2vars($sourcetype, $field1, $field2, $targets)
+        @traject_2fields2vars($(esc(sourcetype)), $(esc(field1)), $(esc(field2)), $(esc(targets)))
     end
 end
 
