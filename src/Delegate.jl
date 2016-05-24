@@ -116,19 +116,20 @@ end
 A macro for type field delegation over two fields of T func{T}(arg::T)
     
   # This
-
+```julia
     import Base: hypot
     
     type RightTriangle   legA::Float64; legB::Float64;  end;
 
-    @delegateInto_2fields1var RightTriangle legA legB [ hypot, ];
+    @delegateInto_2fields1var( RightTriangle, legA, legB, [ hypot, ] );
+    @delegateInto_2fields1var  RightTriangle  legA  legB  [ hypot, ]  ;
   
   # Allows
   
     myRightTriangle  = RightTriangle( 3.0, 4.0 )
     
     hypot(myRightTriangle)   #  5.0
-    
+```    
 """     
 macro delegateInto_2fields1var(sourcetype, field1, field2, targets)
   typesname = esc( :($sourcetype) )
@@ -164,7 +165,8 @@ A macro for type field delegation over three fields of T func{T}(arg::T)
     
     type ThreeFloats a::Float64; B::Float64;  C::Float64;  end;
 
-    @delegateInto_3fields1var ThreeFloats a b c [ add3, ];
+    @delegateInto_3fields1var( ThreeFloats, a, b, c, [ add3, ] );
+    @delegateInto_3fields1var  ThreeFloats  a  b  c  [ add3, ]  ;
   
   # Allows
   
