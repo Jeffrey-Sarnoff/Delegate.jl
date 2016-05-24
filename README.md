@@ -1,4 +1,6 @@
 ## Delegate.jl
+#### Delegate functions into type fields or over type vars, with plain or iso-typed result.
+
 
 Delegate unary, binary, trinary functions over a field in values of a type.  
 
