@@ -24,19 +24,19 @@ end;
 a = AnInt(3);
 b = AnInt(7);
 
-@test iseven(a) == false
-@test isodd(b)  == true
+@test iseven(a) == false;
+@test isodd(b)  == true;
 
-@test -a != a
-@test -(-a) == a
-@test abs(-a) == a
+@test -a != a;
+@test -(-a) == a;
+@test abs(-a) == a;
 
-@test (a <  b) == true
-@test (b <= a) == false
+@test (a <  b) == true;
+@test (b <= a) == false;
 
-@test (a + b) == AnInt(10)
-@test (a - b) == AnInt(-4)
-@test (a * b) == AnInt(21)
+@test (a + b) == AnInt(10);
+@test (a - b) == AnInt(-4);
+@test (a * b) == AnInt(21);
 
 
 
@@ -64,4 +64,4 @@ end
 myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ) 
 validHiLo = HiLo(8012.888888888, 4.440892098500626e-14)
 
-@test myHiLo == validHiLo
+@test myHiLo == validHiLo;
