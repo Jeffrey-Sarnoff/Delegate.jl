@@ -11,15 +11,15 @@ Delegate unary, binary, trinary functions into fields of a type.
 
 ## exports
 
-    # macros that return values with type that of the return type of the function delegated
+    # macros that return values typed as the function delegated returns
     # (providing the delegated function result as directly computed)
     
     @delegateInto_1field1var,   @delegateInto_1field2vars,
     @delegateInto_2fields1var,  @delegateInto_3fields1var,
     @delegateInto_2fields2vars, 
     
-    # macros that return values with type that of the parameter type of function delegated
-    # (wrapping the delegated function result in the type used to dispach the delegated function)
+    # macros that return values typed as the parameter[s] of the delegation
+    # (wrapping the delegated function result in the dispatching type)
 
     @delegateWith_1field1var,   @delegateWith_1field2vars,
     @delegateWith_2fields1var,  @delegateWith_3fields1var,
