@@ -1,12 +1,12 @@
 module Delegate
 
-export @delegate, @delegate2vars,                      # @delegate1var1field,       @delegate2vars1field
-       @delegateTyped, @delegate2varsTyped,            # @delegate1var1fieldTyped,  @delegate2vars1fieldTyped
-       @delegate2fields, @delegate3fields,             # @delegate1var2fields,      @delegate1var3fields
-       @delegate2fieldsTyped, @delegate3fieldsTyped    # @delegate1var2fieldsTyped, @delegate1var3fieldsTyped
+export @delegate, @delegate2vars,                      # @delegate1fieldof1var,      @delegate1fieldof2vars
+       @delegateTyped, @delegate2varsTyped,            # @isodelegate1fieldof1var,   @isodelegate1fieldof2vars
+       @delegate2fields, @delegate3fields,             # @delegate2fieldsof1var,     @delegate3fieldsof1var
+       @delegate2fieldsTyped, @delegate3fieldsTyped    # @isodelegate2fieldsof1var,  @isodelegate3fieldsof1var
 
-                                                       # @delegate2vars2fields
-                                                       # @delegate3vars1field
+                                                       # @delegate2fieldsof2vars,    @delegate1fieldof3vars
+                                                       # @isodelegate2fieldsof2vars, @isodelegate1fieldof3vars
 
 #=
     based on original work by John Myles White and Toivo Henningsson
