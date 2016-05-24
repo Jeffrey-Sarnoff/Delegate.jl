@@ -54,16 +54,16 @@ macro delegateInto_1field1var(sourcetype, field1, targets)
   return Expr(:block, fdefs...)
 end
 
-macro delegate(sourcetype, targets)
-  typename = esc(sourcetype.args[1])
-  fieldname = esc(Expr(:quote, sourcetype.args[2].args[1]))
+macro delegate(sourcetype, field1, targets)
+  typesname = esc( :($sourcetype) )
+  field1name = esc(Expr(:quote, field1))
   funcnames = targets.args
   n = length(funcnames)
   fdefs = Array(Any, n)
   for i in 1:n
     funcname = esc(funcnames[i])
     fdefs[i] = quote
-                 ($funcname)(a::($typename), args...) = ($funcname)(getfield(a,($fieldname)), args...)
+                 ($funcname)(a::($typesname), args...) = ($funcname)(getfield(a,($field1name)), args...)
                end
     end
   return Expr(:block, fdefs...)
