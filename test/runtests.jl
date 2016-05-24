@@ -41,7 +41,7 @@ b = AnInt(7);
 
 
 
-typealias SysFloat Union{Float64,Float32}
+typealias SysFloat Union{Float64,Float32};
 
 function renormalize{T<:SysFloat}(a::T, b::T)
     hi = a + b
@@ -57,11 +57,11 @@ end;
 
 function (==){T<:SysFloat}(a::HiLo{T}, b::HiLo{T})
     (a.hi == b.hi) & (a.lo == b.lo)
-end    
+end;   
 
 @delegateWith_2fields1var( HiLo, hi, lo, [ renormalize, ] );
 
-myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ) 
-validHiLo = HiLo(8012.888888888, 4.440892098500626e-14)
+myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ); 
+validHiLo = HiLo(8012.888888888, 4.440892098500626e-14);
 
 @test myHiLo == validHiLo;
