@@ -3,7 +3,8 @@ using Base.Test
 
 import Base: (==), (<), (<=), abs, iseven, isodd, (-), (+), (*), hypot;
 
-import Delegate: @delegate, @delegate2vars, @delegate2fields, @delegateTyped, @delegate2fieldsTyped;
+import Delegate: @delegate, @delegate2vars, @delegate2fields, 
+                 @delegateTyped, @delegate2fieldsTyped;
 
 type AnInt
    val::Int
@@ -20,8 +21,8 @@ end;
 
 
 
-a = AnInt(3)
-b = AnInt(7)
+a = AnInt(3);
+b = AnInt(7);
 
 @test iseven(a) == false
 @test isodd(b)  == true
