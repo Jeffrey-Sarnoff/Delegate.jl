@@ -11,12 +11,20 @@ Delegate unary, binary, trinary functions into fields of a type.
 
 ## exports
 
-    @delegate, @delegate2vars, 
-    @delegate2fields, @delegate3fields,
+    # macros that return values with type that of the return type of the function delegated
+    # (providing the delegated function result as directly computed)
     
-    @delegateTyped, @delegate2varsTyped, 
-    @delegate2fieldsTyped, @delegate3fieldsTyped
+    @delegateInto_1field1var,   @delegateInto_1field2vars,
+    @delegateInto_2fields1var,  @delegateInto_3fields1var,
+    @delegateInto_2fields2vars, 
+    
+    # macros that return values with type that of the parameter type of function delegated
+    # (wrapping the delegated function result in the type used to dispach the delegated function)
 
+    @delegateWith_1field1var,   @delegateWith_1field2vars,
+    @delegateWith_2fields1var,  @delegateWith_3fields1var,
+    @delegateWith_2fields2vars
+    
     
 ## Use
 
@@ -27,8 +35,8 @@ Delegate unary, binary, trinary functions into fields of a type.
     type MyInts     elems::Vector{Int} end;
     type MyNums{T}  elems::Vector{T}   end;
 
-    @delegate MyInts.elems [ length,  last ];
-    @delegate MyNums.elems [ length,  last ];
+    @delegateInto_1field1var MyInts.elems [ length,  last ];
+    @delegateInto_1field1var MyNums.elems [ length,  last ];
        
     myInts = MyInts([5, 4, 3, 2, 1]);
     myNums = MyNums([1.0, 2.0, 3.0]);
@@ -42,7 +50,7 @@ Delegate unary, binary, trinary functions into fields of a type.
     
     type MyInt  val::Int  end;
 
-    @delegate2vars MyInt.val [ (<), (<=) ];
+    @delegateInto_1field2vars MyInt.val [ (<), (<=) ];
   
     myFirstInt  = MyInt(3)
     mySecondInt = MyInt(7)
@@ -56,7 +64,7 @@ Delegate unary, binary, trinary functions into fields of a type.
     
     type RightTriangle   legA::Float64; legB::Float64;  end;
 
-    @delegate2fields RightTriangle legA legB [ hypot, ];
+    @delegateInto_2fields1var RightTriangle legA legB [ hypot, ];
   
     myRightTriangle  = RightTriangle( 3.0, 4.0 )
     
@@ -68,7 +76,7 @@ Delegate unary, binary, trinary functions into fields of a type.
     
     type MyInt  val::Int  end;
 
-    @delegate2varsTyped MyInt.val [ (+), (-), (*) ];
+    @delegateWith_1field2vars MyInt.val [ (+), (-), (*) ];
 
     myFirstInt   = MyInt(3)
     mySecondInt  = MyInt(7)
@@ -88,7 +96,7 @@ Delegate unary, binary, trinary functions into fields of a type.
     
     type HiLo  hi::Float64; lo::Float64;   end;
     
-    @delegate2fieldsTyped HiLo hi lo [ renormalize, ];
+    @delegateWith_2fields1var HiLo hi lo [ renormalize, ];
   
     myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ) 
     # HiLo(8012.89,4.44089e-14)
