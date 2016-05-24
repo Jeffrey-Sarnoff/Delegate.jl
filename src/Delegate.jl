@@ -215,7 +215,7 @@ A macro for type field delegation with an iso-typed result over func{T}(arg::T)
     myFirstInt  = MyInt(3)
 
     myIntNegates   = -myFirstInt              # MyInt(-3)
-    myIntAbsValues = abs(myFirstNegativeInt)  # MyInt( 3)    
+    myIntAbsValues = abs(myIntNegates)        # MyInt( 3)    
 
 """
 macro delegateWith_1field1var(sourcetype, field1, targets)
