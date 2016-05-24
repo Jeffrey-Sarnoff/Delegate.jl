@@ -20,7 +20,7 @@ export @delegateInto_1field1var,   @delegateInto_1field2vars,
 
 A macro for type field delegation over func{T}(arg::T)
     
-  #### This
+## This
     
     import Base: length, last
     
@@ -29,7 +29,7 @@ A macro for type field delegation over func{T}(arg::T)
 
     @delegateInto_1field1var( MyNums, elems, [ length,  last ] );
 
-  #### Allows
+## Allows
 
     myInts = MyInts([5, 4, 3, 2, 1]);
     myNums = MyNums([1.0, 2.0, 3.0]);
@@ -74,7 +74,7 @@ end
 
 A macro for type field delegation over func{T}(arg1::T, arg2::T)
     
-  ### This
+### This
 
     import Base: (<), (<=)
     
@@ -82,7 +82,7 @@ A macro for type field delegation over func{T}(arg1::T, arg2::T)
 
     @delegateInto_1field2vars( MyInt, val, [ (<), (<=) ] );
 
-  ### Allows
+### Allows
   
     myFirstInt  = MyInt(3)
     mySecondInt = MyInt(7)
