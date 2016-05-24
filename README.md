@@ -25,10 +25,13 @@ Delegate unary, binary, trinary functions into fields of a type.
     @delegateWith_2fields1var,  @delegateWith_3fields1var,
     @delegateWith_2fields2vars
     
-    # synonyms
+    # aliases
     
-    @delegate         # does @delegateInto_1field1var
-    @delegateWrapped  # does @delegateWith_1field1var
+    @delegate          # aliases @delegateInto_1field1var
+    @delegateWrap      # aliases @delegateWith_1field1var
+                       # others patterned as
+    @delgate1f2v       # aliases @delegateInto_1field2vars       
+    @delegateWrap2f1v  # aliases @delegateWith_2fields1var
     
 ## Use
 
