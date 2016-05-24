@@ -2,10 +2,12 @@ module Delegate
 
 export @delegateInto_1field1var,   @delegateInto_1field2vars,
        @delegateInto_2fields1var,  @delegateInto_3fields1var,
-       @delegateInto_2fields2vars, 
+       @delegateInto_2fields2vars,
+       @delegate,
        @delegateWith_1field1var,   @delegateWith_1field2vars,
        @delegateWith_2fields1var,  @delegateWith_3fields1var,
-       @delegateWith_2fields2vars
+       @delegateWith_2fields2vars,
+       @delegateWrapped
 
 #=
     based on original work by John Myles White and Toivo Henningsson
@@ -51,6 +53,10 @@ macro delegateInto_1field1var(sourcetype, targets)
     end
   return Expr(:block, fdefs...)
 end
+
+macro delegate(sourcetype, targets)
+    @delegateInto_1field1var(sourcetype, targets)
+end    
 
 # for methods that take two equi-typed source arguments
 
@@ -213,6 +219,10 @@ macro delegateWith_1field1var(sourcetype, targets)
     end
   return Expr(:block, fdefs...)
 end
+
+macro delegateWrapped(sourcetype, targets)
+    @delegateWith_1field1var(sourcetype, targets)
+end    
 
 
 # for methods that take two equi-typed source arguments) and return an iso-typed result
