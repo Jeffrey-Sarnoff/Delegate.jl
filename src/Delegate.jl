@@ -1,17 +1,6 @@
 module Delegate
 
-export @delegateInto_1field1var   ,  @delegate1f1v,     @delegate,  # aliases for @delegateInto_1field1var
-       @delegateInto_1field2vars  ,  @delegate1f2v,
-       @delegateInto_2fields1var  ,  @delegate2f1v,
-       @delegateInto_3fields1var  ,  @delegate3f1v,
-       @delegateInto_2fields2vars ,  @delegate2f2v,
-       @delegateWith_1field1var   ,  @delegate1f1v, @delegateWrap,  # aliases for @delegateWith_1field1var
-       @delegateWith_1field2vars  ,  @delegateWrap1f2v,
-       @delegateWith_2fields1var  ,  @delegateWrap2f1v,
-       @delegateWith_3fields1var  ,  @delegateWrap3f1v,
-       @delegateWith_2fields2vars ,  @delegateWrap2f2v
-#=       
-export @delegate_1field1var   ,  @delegate1f1v,     @delegate,  # aliases for @delegateInto_1field1var
+export @delegate_1field1var   ,  @delegate1f1v,     @delegate,  # aliases for @delegate_1field1var
        @delegate_1field2vars  ,  @delegate1f2v,
        @delegate_2fields1var  ,  @delegate2f1v,
        @delegate_3fields1var  ,  @delegate3f1v,
@@ -21,7 +10,7 @@ export @delegate_1field1var   ,  @delegate1f1v,     @delegate,  # aliases for @d
        @traject_2fields1var   ,  @traject2f1v,
        @traject_3fields1var   ,  @traject3f1v,
        @traject_2fields2vars  ,  @traject2f2v
-=#
+
 
 #=
     based on original work by John Myles White and Toivo Henningsson
@@ -36,20 +25,20 @@ A macro for type field delegation over func{T}(arg::T)
     
     import Base: length, last
     
-    type MyInts     elems::Vector{Int} end;
+    type AnInts     elems::Vector{Int} end;
     type MyNums{T}  elems::Vector{T}   end;
-
-    @delegateInto_1field1var( MyInts, elems, [ length,  last ] );
-    @delegateInto_1field1var( MyNums, elems, [ length,  last ] );
-
-    myInts = MyInts([5, 4, 3, 2, 1]);
+	
+    @delegate_1field1var( AnInts, elems, [ length,  last ] );
+    @delegate_1field1var( MyNums, elems, [ length,  last ] );
+    
+	myInts = AnInts([5, 4, 3, 2, 1]);
     myNums = MyNums([1.0, 2.0, 3.0]);
     
     length(myInts), length(myNums)   # 5, 3
     last(myInts),   last(myNums)     # 1, 3.0
 
 """
-macro delegateInto_1field1var(sourcetype, field1, targets)
+macro delegate_1field1var(sourcetype, field1, targets)
   typesname  = esc( :($sourcetype) )
   field1name = esc(Expr(:quote, field1))
   funcnames  = targets.args
@@ -65,20 +54,20 @@ macro delegateInto_1field1var(sourcetype, field1, targets)
 end
 
 """
-see @delegateInto_1field1var
+see @delegate_1field1var
 """
 macro delegate(sourcetype, field1, targets)
     quote
-        @delegateInto_1field1var($sourcetype, $field1, $targets)
+        @delegate_1field1var($sourcetype, $field1, $targets)
     end
 end
 
 """
-see @delegateInto_1field1var
+see @delegate_1field1var
 """
 macro delegate1f1v(sourcetype, field1, targets)
     quote
-        @delegateInto_1field1var($sourcetype, $field1, $targets)
+        @delegate_1field1var($sourcetype, $field1, $targets)
     end
 end
 
@@ -90,18 +79,18 @@ A macro for type field delegation over func{T}(arg1::T, arg2::T)
 
     import Base: (<), (<=)
     
-    type MyInt  val::Int  end;
+    type AnInt  val::Int  end;
 
-    @delegateInto_1field2vars( MyInt, val, [ (<), (<=) ] );
+    @delegate_1field2vars( AnInt, val, [ (<), (<=) ] );
 
-    myFirstInt  = MyInt(3)
-    mySecondInt = MyInt(7)
+    myFirstInt  = AnInt(3)
+    mySecondInt = AnInt(7)
 
     myFirstInt  <  mySecondInt  # true
     mySecondInt <= myFirstInt   # false
 
 """     
-macro delegateInto_1field2vars(sourcetype, field1, targets)
+macro delegate_1field2vars(sourcetype, field1, targets)
   typesname  = esc( :($sourcetype) )
   field1name = esc(Expr(:quote, field1))
   funcnames  = targets.args
@@ -118,11 +107,11 @@ macro delegateInto_1field2vars(sourcetype, field1, targets)
 end
 
 """
-see @delegateInto_1field2vars
+see @delegate_1field2vars
 """
 macro delegate1f2v(sourcetype, field1, targets)
     quote
-        @delegateInto_1field2vars($sourcetype, $field1, $targets)
+        @delegate_1field2vars($sourcetype, $field1, $targets)
     end
 end
 
@@ -135,15 +124,14 @@ A macro for type field delegation over two fields of T func{T}(arg::T)
     import Base: hypot
     
     type RightTriangle   legA::Float64; legB::Float64;  end;
-
-    @delegateInto_2fields1var( RightTriangle, legA, legB, [ hypot, ] );
+    @delegate_2fields1var( RightTriangle, legA, legB, [ hypot, ] );
   
     myRightTriangle  = RightTriangle( 3.0, 4.0 )
     
     hypot(myRightTriangle)   #  5.0
 
 """     
-macro delegateInto_2fields1var(sourcetype, field1, field2, targets)
+macro delegate_2fields1var(sourcetype, field1, field2, targets)
   typesname  = esc( :($sourcetype) )
   field1name = esc(Expr(:quote, field1))
   field2name = esc(Expr(:quote, field2))
@@ -161,11 +149,11 @@ macro delegateInto_2fields1var(sourcetype, field1, field2, targets)
 end
 
 """
-see @delegateInto_2fieldsd1var
+see @delegate_2fieldsd1var
 """
 macro delegate2f1v(sourcetype, field1, field2, targets)
     quote
-        @delegateInto_2field1var($sourcetype, $field1, $field2, $targets)
+        @delegate_2field1var($sourcetype, $field1, $field2, $targets)
     end
 end
 
@@ -184,15 +172,14 @@ A macro for type field delegation over three fields of T func{T}(arg::T)
     end    
     
     type ThreeFloats a::Float64; B::Float64;  C::Float64;  end;
-
-    @delegateInto_3fields1var( ThreeFloats, a, b, c, [ add3, ] );
+    @delegate_3fields1var( ThreeFloats, a, b, c, [ add3, ] );
   
     myThreeFloats = ThreeFloats( sqrt(2.), sqrt(22.), sqrt(15.) )
     
     add3(myThreeFloats)   #  (9.977612668403943,-6.661338147750939e-16)
     
 """     
-macro delegateInto_3fields1var(sourcetype, field1, field2, field3, targets)
+macro delegate_3fields1var(sourcetype, field1, field2, field3, targets)
   typesname  = esc( :($sourcetype) )
   field1name = esc(Expr(:quote, field1))
   field2name = esc(Expr(:quote, field2))
@@ -211,19 +198,19 @@ macro delegateInto_3fields1var(sourcetype, field1, field2, field3, targets)
 end
 
 """
-see @delegateInto_3fields1var
+see @delegate_3fields1var
 """
 macro delegate3f1v(sourcetype, field1, field2, field3, targets)
     quote
-        @delegateInto_1field2vars($sourcetype, $field1, $field2, $field3, $targets)
+        @delegate_1field2vars($sourcetype, $field1, $field2, $field3, $targets)
     end
 end
 
 
 """
-see help for @delegateInto_1field2vars
+see help for @delegate_1field2vars
 """
-macro delegateInto_2fields2vars(sourcetype, field1, field2, targets)
+macro delegate_2fields2vars(sourcetype, field1, field2, targets)
   typesname  = esc( :($sourcetype) )
   field1name = esc(Expr(:quote, field1))
   field2name = esc(Expr(:quote, field2))
@@ -243,11 +230,11 @@ macro delegateInto_2fields2vars(sourcetype, field1, field2, targets)
 end
 
 """
-see @delegateInto_2fields2vars
+see @delegate_2fields2vars
 """
 macro delegate2f2v(sourcetype, field1, field2, targets)
     quote
-        @delegateInto_2fields2vars($sourcetype, $field1, $field2, $targets)
+        @delegate_2fields2vars($sourcetype, $field1, $field2, $targets)
     end
 end
 
@@ -261,17 +248,16 @@ A macro for type field delegation with an iso-typed result over func{T}(arg::T)
     
     import Base: (-), abs
     
-    type MyInt  val::Int  end;
+    type AnInt  val::Int  end;
 
-    @delegateWith_1field1var( MyInt, val, [ (-), abs ] );
+    @traject_1field1var( AnInt, val, [ (-), abs ] );
 
-    myFirstInt  = MyInt(3)
-
-    myIntNegates   = -myFirstInt              # MyInt(-3)
-    myIntAbsValues = abs(myIntNegates)        # MyInt( 3)    
+    myFirstInt     = AnInt(3)
+    myIntNegates   = -myFirstInt              # AnInt(-3)
+    myIntAbsValues = abs(myIntNegates)        # AnInt( 3)    
 
 """
-macro delegateWith_1field1var(sourcetype, field1, targets)
+macro traject_1field1var(sourcetype, field1, targets)
   typesname  = esc( :($sourcetype) )
   field1name = esc(Expr(:quote, field1))
   funcnames  = targets.args
@@ -288,21 +274,21 @@ macro delegateWith_1field1var(sourcetype, field1, targets)
 end
 
 """
-see @delegateWith_1field1var
+see @traject_1field1var
 """
-macro delegateWrap(sourcetype, field1, targets)
+macro traject(sourcetype, field1, targets)
     quote
-        @delegateWith_1field1var($sourcetype, $field1, $targets)
+        @traject_1field1var($sourcetype, $field1, $targets)
     end
 end
 
 
 """
-see @delegateWith_1field1var
+see @traject_1field1var
 """
-macro delegateWrap1f1v(sourcetype, field1, targets)
+macro traject1f1v(sourcetype, field1, targets)
     quote
-        @delegateWith_1field1var($sourcetype, $field1, $targets)
+        @traject_1field1var($sourcetype, $field1, $targets)
     end
 end
 
@@ -314,19 +300,19 @@ A macro for type field delegation with an iso-typed result over func{T}(arg1::T,
 
     import Base: (+), (-), (*)
     
-    type MyInt  val::Int  end;
+    type AnInt  val::Int  end;
 
-    @delegateWith_1field2vars( MyInt, val, [ (+), (-), (*) ] );
+    @traject_1field2vars( AnInt, val, [ (+), (-), (*) ] );
 
-    myFirstInt   = MyInt(3)
-    mySecondInt  = MyInt(7)
+    myFirstInt   = AnInt(3)
+    mySecondInt  = AnInt(7)
 
-    myIntAdds       = myFirstInt + mySecondInt    # MyInt(10)
-    myIntSubtracts  = myFirstInt - mySecondInt    # MyInt(-4)
-    myIntMultiplies = myFirstInt * mySecondInt    # MyInt(21) 
+    myIntAdds       = myFirstInt + mySecondInt    # AnInt(10)
+    myIntSubtracts  = myFirstInt - mySecondInt    # AnInt(-4)
+    myIntMultiplies = myFirstInt * mySecondInt    # AnInt(21) 
 
 """
-macro delegateWith_1field2vars(sourcetype, field1, targets)
+macro traject_1field2vars(sourcetype, field1, targets)
   typesname  = esc( :($sourcetype) )
   field1name = esc(Expr(:quote, field1))
   funcnames  = targets.args
@@ -343,11 +329,11 @@ macro delegateWith_1field2vars(sourcetype, field1, targets)
 end
 
 """
-see @delegateWith_1field2vars
+see @traject_1field2vars
 """
-macro delegateWrap1f2v(sourcetype, field1, targets)
+macro traject1f2v(sourcetype, field1, targets)
     quote
-        @delegateWith_1field2var($sourcetype, $field1, $targets)
+        @traject_1field2var($sourcetype, $field1, $targets)
     end
 end
 
@@ -367,14 +353,12 @@ A macro for type field delegation with an iso-typed result over two fields of T 
 
     type HiLo  hi::Float64; lo::Float64;   end;
     
-
-    @delegateWith_2fields1var( HiLo, hi, lo, [ renormalize, ] );
+    @traject_2fields1var( HiLo, hi, lo, [ renormalize, ] );
 
     myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ) # HiLo(8012.89,4.44089e-14)
     showall(myHiLo)     # HiLo(8012.888888888,4.440892098500626e-14)
-
 """
-macro delegateWith_2fields1var(sourcetype, field1, field2, targets)
+macro traject_2fields1var(sourcetype, field1, field2, targets)
   typesname  = esc( :($sourcetype) )
   field1name = esc(Expr(:quote, field1))
   field2name = esc(Expr(:quote, field2))
@@ -392,19 +376,19 @@ macro delegateWith_2fields1var(sourcetype, field1, field2, targets)
 end
 
 """
-see @delegateWith_2fields1var
+see @traject_2fields1var
 """
-macro delegateWrap2f1v(sourcetype, field1, field2, targets)
+macro traject2f1v(sourcetype, field1, field2, targets)
     quote
-        @delegateWith_2fields1var($sourcetype, $field1, $field2, $targets)
+        @traject_2fields1var($sourcetype, $field1, $field2, $targets)
     end
 end
 
 
 """
-see help for @delegateWith_2fields1var
+see help for @traject_2fields1var
 """
-macro delegateWith_3fields1var(sourcetype, field1, field2, field3, targets)
+macro traject_3fields1var(sourcetype, field1, field2, field3, targets)
   typesname  = esc( :($sourcetype) )
   field1name = esc(Expr(:quote, field1))
   field2name = esc(Expr(:quote, field2))
@@ -424,19 +408,19 @@ end
 
 
 """
-see @delegateWith_3fields1var
+see @traject_3fields1var
 """
-macro delegateWrap3f1v(sourcetype, field1, field2, field3, targets)
+macro traject3f1v(sourcetype, field1, field2, field3, targets)
     quote
-        @delegateWith_3fields1var($sourcetype, $field1, $field2, $field3, $targets)
+        @traject_3fields1var($sourcetype, $field1, $field2, $field3, $targets)
     end
 end
 
 
 """
-see help for @delegateWith_1field2vars
+see help for @traject_1field2vars
 """
-macro delegateWith_2fields2vars(sourcetype, field1, field2, targets)
+macro traject_2fields2vars(sourcetype, field1, field2, targets)
   typesname  = esc( :($sourcetype) )
   field1name = esc(Expr(:quote, field1))
   field2name = esc(Expr(:quote, field2))
@@ -456,11 +440,11 @@ macro delegateWith_2fields2vars(sourcetype, field1, field2, targets)
 end
 
 """
-see @delegateWith_2fields2vars
+see @traject_2fields2vars
 """
-macro delegateWrap2f2v(sourcetype, field1, field2, targets)
+macro traject2f2v(sourcetype, field1, field2, targets)
     quote
-        @delegateWith_2fields2vars($sourcetype, $field1, $field2, $targets)
+        @traject_2fields2vars($sourcetype, $field1, $field2, $targets)
     end
 end
 
