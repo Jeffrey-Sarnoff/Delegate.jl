@@ -3,21 +3,21 @@ using Base.Test
 
 import Base: (==), (<), (<=), abs, iseven, isodd, (-), (+), (*), hypot;
 
-import Delegate: @delegateInto_1field1var, @delegateInto_1field2vars, @delegateInto_2fields1var, 
-                 @delegateWith_1field1var,  @delegateWith_1field2vars, @delegateWith_2fields1var;
+import Delegate: @delegate_1field1var, @delegate_1field2vars, @delegate_2fields1var, 
+                 @traject_1field1var,  @traject_1field2vars,  @traject_2fields1var;
 
 type AnInt
    val::Int
 end;   
 
 
-@delegateInto_1field1var(  AnInt, val, [ iseven, isodd ] );
+@delegate_1field1var(  AnInt, val, [ iseven, isodd ] );
 
-@delegateWith_1field1var(  AnInt, val, [ (-), abs ] );
+@delegate_1field2vars( AnInt, val, [ (==), (<), (<=) ] );
 
-@delegateInto_1field2vars( AnInt, val, [ (==), (<), (<=) ] );
+@traject_1field1var(   AnInt, val, [ (-), abs ] );
 
-@delegateWith_1field2vars( AnInt, val, [ (+), (-), (*) ] );
+@traject_1field2vars(  AnInt, val, [ (+), (-), (*) ] );
 
 
 
@@ -59,7 +59,7 @@ function (==){T<:SysFloat}(a::HiLo{T}, b::HiLo{T})
     (a.hi == b.hi) & (a.lo == b.lo)
 end;   
 
-@delegateWith_2fields1var( HiLo, hi, lo, [ renormalize, ] );
+@traject_2fields1var( HiLo, hi, lo, [ renormalize, ] );
 
 myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ); 
 validHiLo = HiLo(8012.888888888, 4.440892098500626e-14);
