@@ -25,6 +25,10 @@ Delegate unary, binary, trinary functions into fields of a type.
     @delegateWith_2fields1var,  @delegateWith_3fields1var,
     @delegateWith_2fields2vars
     
+    # synonyms
+    
+    @delegate         = @delegateInto_1field1var
+    @delegateWrapped  = @delegateWith_1field1var
     
 ## Use
 
