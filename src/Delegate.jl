@@ -41,7 +41,7 @@ A macro for type field delegation over func{T}(arg::T)
 """     
 macro delegateInto_1field1var(sourcetype, targets)
   typename = esc(sourcetype.args[1])
-  fieldname = esc(Expr(:quote, source.args[2].args[1]))
+  fieldname = esc(Expr(:quote, sourcetype.args[2].args[1]))
   funcnames = targets.args
   n = length(funcnames)
   fdefs = Array(Any, n)
@@ -83,7 +83,7 @@ A macro for type field delegation over func{T}(arg1::T, arg2::T)
 """     
 macro delegateInto_1field2vars(sourcetype, targets)
   typesname = esc(sourcetype.args[1])
-  fieldname = esc(Expr(:quote, sourceExemplar.args[2].args[1]))
+  fieldname = esc(Expr(:quote, sourcetype.args[2].args[1]))
   funcnames = targets.args
   n = length(funcnames)
   fdefs = Array(Any, n)
@@ -206,7 +206,7 @@ A macro for type field delegation with an iso-typed result over func{T}(arg::T)
 """
 macro delegateWith_1field1var(sourcetype, targets)
   typename = esc(sourcetype.args[1])
-  fieldname = esc(Expr(:quote, source.args[2].args[1]))
+  fieldname = esc(Expr(:quote, sourcetype.args[2].args[1]))
   funcnames = targets.args
   n = length(funcnames)
   fdefs = Array(Any, n)
@@ -251,7 +251,7 @@ A macro for type field delegation with an iso-typed result over func{T}(arg1::T,
 """
 macro delegateWith_1field2vars(sourcetype, targets)
   typesname = esc(sourcetype.args[1])
-  fieldname = esc(Expr(:quote, sourceExemplar.args[2].args[1]))
+  fieldname = esc(Expr(:quote, sourcetype.args[2].args[1]))
   funcnames = targets.args
   n = length(funcnames)
   fdefs = Array(Any, n)
