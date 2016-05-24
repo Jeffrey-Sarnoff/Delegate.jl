@@ -27,9 +27,9 @@ A macro for type field delegation over func{T}(arg::T)
     type MyInts     elems::Vector{Int} end;
     type MyNums{T}  elems::Vector{T}   end;
 
-    @delegateInto_1field1var MyInts elems [ length,  last ];
-    @delegateInto_1field1var MyNums elems [ length,  last ];
-       
+    @delegateInto_1field1var( MyNums, elems, [ length,  last ] );
+    @delegateInto_1field1var  MyInts  elems  [ length,  last ]  ;
+    
   # Allows
 
     myInts = MyInts([5, 4, 3, 2, 1]);
@@ -81,7 +81,8 @@ A macro for type field delegation over func{T}(arg1::T, arg2::T)
     
     type MyInt  val::Int  end;
 
-    @delegateInto_1field2vars MyInt.val [ (<), (<=) ];
+    @delegateInto_1field2vars( MyInt, val, [ (<), (<=) ] );
+    @delegateInto_1field2vars  MyInt  val  [ (<), (<=) ]  ;
   
   # Allows
   
@@ -92,9 +93,9 @@ A macro for type field delegation over func{T}(arg1::T, arg2::T)
     mySecondInt <= myFirstInt   # false
 
 """     
-macro delegateInto_1field2vars(sourcetype, targets)
-  typesname = esc(sourcetype.args[1])
-  fieldname = esc(Expr(:quote, sourcetype.args[2].args[1]))
+macro delegateInto_1field2vars(sourcetype, field1, targets)
+  typesname = esc( :($sourcetype) )
+  field1name = esc(Expr(:quote, field1))
   funcnames = targets.args
   n = length(funcnames)
   fdefs = Array(Any, n)
@@ -102,12 +103,11 @@ macro delegateInto_1field2vars(sourcetype, targets)
     funcname = esc(funcnames[i])
     fdefs[i] = quote
                  ($funcname)(a::($typesname), b::($typesname), args...) = 
-                   ($funcname)(getfield(a,($fieldname)), getfield(b,($fieldname)), args...)
+                   ($funcname)(getfield(a,($field1name)), getfield(b,($field1name)), args...)
                end
     end
   return Expr(:block, fdefs...)
 end
-
 
 # for methods that use multiple fields from the source type
 
