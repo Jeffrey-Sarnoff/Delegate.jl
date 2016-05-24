@@ -116,7 +116,7 @@ end
 A macro for type field delegation over two fields of T func{T}(arg::T)
     
   # This
-```julia
+
     import Base: hypot
     
     type RightTriangle   legA::Float64; legB::Float64;  end;
@@ -129,7 +129,7 @@ A macro for type field delegation over two fields of T func{T}(arg::T)
     myRightTriangle  = RightTriangle( 3.0, 4.0 )
     
     hypot(myRightTriangle)   #  5.0
-```    
+
 """     
 macro delegateInto_2fields1var(sourcetype, field1, field2, targets)
   typesname = esc( :($sourcetype) )
@@ -207,7 +207,8 @@ A macro for type field delegation with an iso-typed result over func{T}(arg::T)
     
     type MyInt  val::Int  end;
 
-    @delegateWith_1field1var MyInt.val [ (-), abs ];
+    @delegateWith_1field1var( MyInt, val, [ (-), abs ] );
+    @delegateWith_1field1var  MyInt  val  [ (-), abs ]  ;
   
   # Allows
   
@@ -217,17 +218,17 @@ A macro for type field delegation with an iso-typed result over func{T}(arg::T)
     myIntAbsValues = abs(myFirstNegativeInt)  # MyInt( 3)    
 
 """
-macro delegateWith_1field1var(sourcetype, targets)
-  typename = esc(sourcetype.args[1])
-  fieldname = esc(Expr(:quote, sourcetype.args[2].args[1]))
+macro delegateWith_1field1var(sourcetype, field1, targets)
+  typesname = esc( :($sourcetype) )
+  field1name = esc(Expr(:quote, field1))
   funcnames = targets.args
   n = length(funcnames)
   fdefs = Array(Any, n)
   for i in 1:n
     funcname = esc(funcnames[i])
     fdefs[i] = quote
-                 ($funcname)(a::($typename), args...) = 
-                   ($typename)( ($funcname)(getfield(a,($fieldname)), args...) )
+                 ($funcname)(a::($typesname), args...) = 
+                   ($typesname)( ($funcname)(getfield(a,($field1name)), args...) )
                end
     end
   return Expr(:block, fdefs...)
