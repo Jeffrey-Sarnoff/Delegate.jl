@@ -1,12 +1,11 @@
 module Delegate
 
-export @delegate, @delegate2vars,                      # @delegateInto_1field1var,   @delegateInto_1field2vars
-       @delegateTyped, @delegate2varsTyped,            # @delegateWith_1field1var,   @delegateWith_1field2vars
-       @delegate2fields, @delegate3fields,             # @delegateInto_2fields1var,  @delegateInto_3fields1var
-       @delegate2fieldsTyped, @delegate3fieldsTyped    # @delegateWith_2fields1var,  @delegateWith_3fields1var
-
-                                                       # @delegateInto_2fields2vars, @delegateInto_1field3vars
-                                                       # @delegateWith_2fields2vars, @delegateWith_1field3vars
+export @delegateInto_1field1var,   @delegateInto_1field2vars,
+       @delegateInto_2fields1var,  @delegateInto_3fields1var,
+       @delegateInto_2fields2vars, 
+       @delegateWith_1field1var,   @delegateWith_1field2vars,
+       @delegateWith_2fields1var,  @delegateWith_3fields1var,
+       @delegateWith_2fields2vars
 
 #=
     based on original work by John Myles White and Toivo Henningsson
@@ -26,8 +25,8 @@ A macro for type field delegation over func{T}(arg::T)
     type MyInts     elems::Vector{Int} end;
     type MyNums{T}  elems::Vector{T}   end;
 
-    @delegate MyInts.elems [ length,  last ];
-    @delegate MyNums.elems [ length,  last ];
+    @delegateInto_1field1var MyInts.elems [ length,  last ];
+    @delegateInto_1field1var MyNums.elems [ length,  last ];
        
   Allows
 
@@ -38,8 +37,8 @@ A macro for type field delegation over func{T}(arg::T)
     last(myInts), last(myNums)     # 1, 3.0
 
 """     
-macro delegate(source, targets)
-  typename = esc(source.args[1])
+macro delegateInto_1field1var(sourcetype, targets)
+  typename = esc(sourcetype.args[1])
   fieldname = esc(Expr(:quote, source.args[2].args[1]))
   funcnames = targets.args
   n = length(funcnames)
@@ -65,7 +64,7 @@ A macro for type field delegation over func{T}(arg1::T, arg2::T)
     
     type MyInt  val::Int  end;
 
-    @delegate2vars MyInt.val [ (<), (<=) ];
+    @delegateInto_1field2vars MyInt.val [ (<), (<=) ];
   
   Allows
   
@@ -76,8 +75,8 @@ A macro for type field delegation over func{T}(arg1::T, arg2::T)
     mySecondInt <= myFirstInt   # false
 
 """     
-macro delegate2vars(sourceExemplar, targets)
-  typesname = esc(sourceExemplar.args[1])
+macro delegateInto_1field2vars(sourcetype, targets)
+  typesname = esc(sourcetype.args[1])
   fieldname = esc(Expr(:quote, sourceExemplar.args[2].args[1]))
   funcnames = targets.args
   n = length(funcnames)
@@ -105,7 +104,7 @@ A macro for type field delegation over two fields of T func{T}(arg::T)
     
     type RightTriangle   legA::Float64; legB::Float64;  end;
 
-    @delegate2fields RightTriangle legA legB [ hypot, ];
+    @delegateInto_2fields1var RightTriangle legA legB [ hypot, ];
   
   Allows
   
@@ -114,8 +113,8 @@ A macro for type field delegation over two fields of T func{T}(arg::T)
     hypot(myRightTriangle)   #  5.0
     
 """     
-macro delegate2fields(sourceExemplar, field1, field2, targets)
-  typesname = esc( :($sourceExemplar) )
+macro delegateInto_2fields1var(sourcetype, field1, field2, targets)
+  typesname = esc( :($sourcetype) )
   field1name = esc(Expr(:quote, field1))
   field2name = esc(Expr(:quote, field2))
   funcnames = targets.args
@@ -148,7 +147,7 @@ A macro for type field delegation over three fields of T func{T}(arg::T)
     
     type ThreeFloats a::Float64; B::Float64;  C::Float64;  end;
 
-    @delegate3fields ThreeFloats a b c [ add3, ];
+    @delegateInto_3fields1var ThreeFloats a b c [ add3, ];
   
   Allows
   
@@ -158,8 +157,8 @@ A macro for type field delegation over three fields of T func{T}(arg::T)
     #  (9.977612668403943,-6.661338147750939e-16)
     
 """     
-macro delegate3fields(sourceExemplar, field1, field2, field3, targets)
-  typesname = esc( :($sourceExemplar) )
+macro delegateInto_3fields1var(sourcetype, field1, field2, field3, targets)
+  typesname = esc( :($sourcetype) )
   field1name = esc(Expr(:quote, field1))
   field2name = esc(Expr(:quote, field2))
   field3name = esc(Expr(:quote, field3))
@@ -189,7 +188,7 @@ A macro for type field delegation with an iso-typed result over func{T}(arg::T)
     
     type MyInt  val::Int  end;
 
-    @delegateTyped MyInt.val [ (-), abs ];
+    @delegateWith_1field1var MyInt.val [ (-), abs ];
   
   Allows
   
@@ -199,8 +198,8 @@ A macro for type field delegation with an iso-typed result over func{T}(arg::T)
     myIntAbsValues = abs(myFirstNegativeInt)  # MyInt( 3)    
 
 """
-macro delegateTyped(source, targets)
-  typename = esc(source.args[1])
+macro delegateWith_1field1var(sourcetype, targets)
+  typename = esc(sourcetype.args[1])
   fieldname = esc(Expr(:quote, source.args[2].args[1]))
   funcnames = targets.args
   n = length(funcnames)
@@ -228,7 +227,7 @@ A macro for type field delegation with an iso-typed result over func{T}(arg1::T,
     
     type MyInt  val::Int  end;
 
-    @delegate2varsTyped MyInt.val [ (+), (-), (*) ];
+    @delegateWith_1field2vars MyInt.val [ (+), (-), (*) ];
   
   Allows
   
@@ -240,8 +239,8 @@ A macro for type field delegation with an iso-typed result over func{T}(arg1::T,
     myIntMultiplies = myFirstInt * mySecondInt    # MyInt(21) 
 
 """
-macro delegate2varsTyped(sourceExemplar, targets)
-  typesname = esc(sourceExemplar.args[1])
+macro delegateWith_1field2vars(sourcetype, targets)
+  typesname = esc(sourcetype.args[1])
   fieldname = esc(Expr(:quote, sourceExemplar.args[2].args[1]))
   funcnames = targets.args
   n = length(funcnames)
@@ -275,7 +274,7 @@ A macro for type field delegation with an iso-typed result over two fields of T 
     type HiLo  hi::Float64; lo::Float64;   end;
     
 
-    @delegate2fieldsTyped HiLo hi lo [ renormalize, ];
+    @delegateWith_2fields1var HiLo hi lo [ renormalize, ];
   
   Allows
   
@@ -285,8 +284,8 @@ A macro for type field delegation with an iso-typed result over two fields of T 
     # (8012.888888888,4.440892098500626e-14)
 
 """
-macro delegate2fieldsTyped(sourceExemplar, field1, field2, targets)
-  typesname = esc( :($sourceExemplar) )
+macro delegateWith_2fields1var(sourcetype, field1, field2, targets)
+  typesname = esc( :($sourcetype) )
   field1name = esc(Expr(:quote, field1))
   field2name = esc(Expr(:quote, field2))
   funcnames = targets.args
@@ -303,10 +302,10 @@ macro delegate2fieldsTyped(sourceExemplar, field1, field2, targets)
 end
 
 """
-see help for @delegate2fieldsTyped
+see help for @delegateWith_2fields1var
 """
-macro delegate3fieldsTyped(sourceExemplar, field1, field2, field3, targets)
-  typesname = esc( :($sourceExemplar) )
+macro delegateWith_3fields1var(sourcetype, field1, field2, field3, targets)
+  typesname = esc( :($sourcetype) )
   field1name = esc(Expr(:quote, field1))
   field2name = esc(Expr(:quote, field2))
   field3name = esc(Expr(:quote, field3))
@@ -318,6 +317,51 @@ macro delegate3fieldsTyped(sourceExemplar, field1, field2, field3, targets)
     fdefs[i] = quote
                  ($funcname)(a::($typesname), args...) = 
                     ($typesname)( ($funcname)(getfield(a, ($field1name)), getfield(a, ($field2name)), getfield(a, ($field3name)), args...)... )
+               end
+    end
+  return Expr(:block, fdefs...)
+end
+
+
+"""
+see help for @delegateInto_1field2vars
+"""
+macro delegateInto_2fields2vars(sourcetype, field1, field2, targets)
+  typesname = esc( :($sourcetype) )
+  field1name = esc(Expr(:quote, field1))
+  field2name = esc(Expr(:quote, field2))
+  funcnames = targets.args
+  n = length(funcnames)
+  fdefs = Array(Any, n)
+  for i in 1:n
+    funcname = esc(funcnames[i])
+    fdefs[i] = quote
+                 ($funcname)(a::($typesname), b::($typesname), args...) = 
+                     ($funcname)(getfield(a, ($field1name)), getfield(a, ($field2name)),
+                                 getfield(b, ($field1name)), getfield(b, ($field2name)), 
+                                 args...)
+               end
+    end
+  return Expr(:block, fdefs...)
+end
+
+"""
+see help for @delegateWith_1field2vars
+"""
+macro delegateWith_2fields2vars(sourcetype, field1, field2, targets)
+  typesname = esc( :($sourcetype) )
+  field1name = esc(Expr(:quote, field1))
+  field2name = esc(Expr(:quote, field2))
+  funcnames = targets.args
+  n = length(funcnames)
+  fdefs = Array(Any, n)
+  for i in 1:n
+    funcname = esc(funcnames[i])
+    fdefs[i] = quote
+                 ($funcname)(a::($typesname), b::($typesname), args...) = 
+                    ($typesname)( ($funcname)(getfield(a, ($field1name)), getfield(a, ($field2name)),
+                                              getfield(b, ($field1name)), getfield(b, ($field2name)), 
+                                              args...)... )
                end
     end
   return Expr(:block, fdefs...)
