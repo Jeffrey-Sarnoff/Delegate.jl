@@ -320,6 +320,7 @@ macro delegate3fieldsTyped(sourceExemplar, field1, field2, field3, targets)
   return Expr(:block, fdefs...)
 end
 
+const tmp=5
 
 end # module Delegate
 
