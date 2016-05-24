@@ -5,12 +5,23 @@ export @delegateInto_1field1var   ,  @delegate1f1v,     @delegate,  # aliases fo
        @delegateInto_2fields1var  ,  @delegate2f1v,
        @delegateInto_3fields1var  ,  @delegate3f1v,
        @delegateInto_2fields2vars ,  @delegate2f2v,
-       @delegateWith_1field1var   ,  @delegateWrap1f1v, @delegateWrap,  # aliases for @delegateWith_1field1var
+       @delegateWith_1field1var   ,  @delegate1f1v, @delegateWrap,  # aliases for @delegateWith_1field1var
        @delegateWith_1field2vars  ,  @delegateWrap1f2v,
        @delegateWith_2fields1var  ,  @delegateWrap2f1v,
        @delegateWith_3fields1var  ,  @delegateWrap3f1v,
        @delegateWith_2fields2vars ,  @delegateWrap2f2v
-       
+#=       
+export @delegate_1field1var   ,  @delegate1f1v,     @delegate,  # aliases for @delegateInto_1field1var
+       @delegate_1field2vars  ,  @delegate1f2v,
+       @delegate_2fields1var  ,  @delegate2f1v,
+       @delegate_3fields1var  ,  @delegate3f1v,
+       @delegate_2fields2vars ,  @delegate2f2v,
+       @traject_1field1var    ,  @traject1f1v,      @traject,  # aliases for @traject_1field1var
+       @traject_1field2vars   ,  @traject1f2v,
+       @traject_2fields1var   ,  @traject2f1v,
+       @traject_3fields1var   ,  @traject3f1v,
+       @traject_2fields2vars  ,  @traject2f2v
+=#
 
 #=
     based on original work by John Myles White and Toivo Henningsson
