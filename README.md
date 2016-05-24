@@ -27,8 +27,8 @@ Delegate unary, binary, trinary functions into fields of a type.
     
     # synonyms
     
-    @delegate         = @delegateInto_1field1var
-    @delegateWrapped  = @delegateWith_1field1var
+    @delegate         # does @delegateInto_1field1var
+    @delegateWrapped  # does @delegateWith_1field1var
     
 ## Use
 
@@ -39,8 +39,8 @@ Delegate unary, binary, trinary functions into fields of a type.
     type MyInts     elems::Vector{Int} end;
     type MyNums{T}  elems::Vector{T}   end;
 
-    @delegateInto_1field1var MyInts.elems [ length,  last ];
-    @delegateInto_1field1var MyNums.elems [ length,  last ];
+    @delegateInto_1field1var( MyInts, elems, [ length,  last ] );
+    @delegateInto_1field1var( MyNums, elems, [ length,  last ] );
        
     myInts = MyInts([5, 4, 3, 2, 1]);
     myNums = MyNums([1.0, 2.0, 3.0]);
@@ -68,7 +68,7 @@ Delegate unary, binary, trinary functions into fields of a type.
     
     type RightTriangle   legA::Float64; legB::Float64;  end;
 
-    @delegateInto_2fields1var RightTriangle legA legB [ hypot, ];
+    @delegateInto_2fields1var( RightTriangle, legA, legB, [ hypot, ] );
   
     myRightTriangle  = RightTriangle( 3.0, 4.0 )
     
@@ -80,7 +80,7 @@ Delegate unary, binary, trinary functions into fields of a type.
     
     type MyInt  val::Int  end;
 
-    @delegateWith_1field2vars MyInt.val [ (+), (-), (*) ];
+    @delegateWith_1field2vars( MyInt, val, [ (+), (-), (*) ] );
 
     myFirstInt   = MyInt(3)
     mySecondInt  = MyInt(7)
