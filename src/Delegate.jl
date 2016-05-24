@@ -20,16 +20,13 @@ export @delegateInto_1field1var,   @delegateInto_1field2vars,
 
 A macro for type field delegation over func{T}(arg::T)
     
-## This
-    
     import Base: length, last
     
     type MyInts     elems::Vector{Int} end;
     type MyNums{T}  elems::Vector{T}   end;
 
+    @delegateInto_1field1var( MyInts, elems, [ length,  last ] );
     @delegateInto_1field1var( MyNums, elems, [ length,  last ] );
-
-## Allows
 
     myInts = MyInts([5, 4, 3, 2, 1]);
     myNums = MyNums([1.0, 2.0, 3.0]);
@@ -73,8 +70,6 @@ end
 """
 
 A macro for type field delegation over func{T}(arg1::T, arg2::T)
-    
-### This
 
     import Base: (<), (<=)
     
@@ -82,8 +77,6 @@ A macro for type field delegation over func{T}(arg1::T, arg2::T)
 
     @delegateInto_1field2vars( MyInt, val, [ (<), (<=) ] );
 
-### Allows
-  
     myFirstInt  = MyInt(3)
     mySecondInt = MyInt(7)
 
@@ -113,15 +106,11 @@ end
 
 A macro for type field delegation over two fields of T func{T}(arg::T)
     
-  ### This
-
     import Base: hypot
     
     type RightTriangle   legA::Float64; legB::Float64;  end;
 
     @delegateInto_2fields1var( RightTriangle, legA, legB, [ hypot, ] );
-  
-  ### Allows
   
     myRightTriangle  = RightTriangle( 3.0, 4.0 )
     
@@ -149,8 +138,6 @@ end
 
 A macro for type field delegation over three fields of T func{T}(arg::T)
     
-  ### This
-
     function add3{T<:Float64}(a::T, b::T, c::T)
         ab   = a+b
         hi   = ab+c
@@ -164,12 +151,9 @@ A macro for type field delegation over three fields of T func{T}(arg::T)
 
     @delegateInto_3fields1var( ThreeFloats, a, b, c, [ add3, ] );
   
-  #### Allows
-  
     myThreeFloats = ThreeFloats( sqrt(2.), sqrt(22.), sqrt(15.) )
     
-    add3(myThreeFloats)   
-    #  (9.977612668403943,-6.661338147750939e-16)
+    add3(myThreeFloats)   #  (9.977612668403943,-6.661338147750939e-16)
     
 """     
 macro delegateInto_3fields1var(sourcetype, field1, field2, field3, targets)
@@ -197,16 +181,12 @@ end
 
 A macro for type field delegation with an iso-typed result over func{T}(arg::T)
     
-  ### This
-
     import Base: (-), abs
     
     type MyInt  val::Int  end;
 
     @delegateWith_1field1var( MyInt, val, [ (-), abs ] );
 
-  ### Allows
-  
     myFirstInt  = MyInt(3)
 
     myIntNegates   = -myFirstInt              # MyInt(-3)
@@ -252,16 +232,12 @@ end
 
 A macro for type field delegation with an iso-typed result over func{T}(arg1::T, arg2::T)
 
-  ### This
-
     import Base: (+), (-), (*)
     
     type MyInt  val::Int  end;
 
     @delegateWith_1field2vars( MyInt, val, [ (+), (-), (*) ] );
 
-  ### Allows
-  
     myFirstInt   = MyInt(3)
     mySecondInt  = MyInt(7)
 
@@ -293,8 +269,6 @@ end
 
 A macro for type field delegation with an iso-typed result over two fields of T func{T}(arg::T)
 
-  ### This
-
     function renormalize(a::Float64, b::Float64)
         hi = a + b
         t = hi - a
@@ -307,12 +281,8 @@ A macro for type field delegation with an iso-typed result over two fields of T 
 
     @delegateWith_2fields1var( HiLo, hi, lo, [ renormalize, ] );
 
-  ### Allows
-  
-    myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ) 
-    # HiLo(8012.89,4.44089e-14)
-    showall(myHiLo) 
-    # (8012.888888888,4.440892098500626e-14)
+    myHiLo = renormalize( HiLo(12.555555555, 8000.333333333) ) # HiLo(8012.89,4.44089e-14)
+    showall(myHiLo)     # HiLo(8012.888888888,4.440892098500626e-14)
 
 """
 macro delegateWith_2fields1var(sourcetype, field1, field2, targets)
