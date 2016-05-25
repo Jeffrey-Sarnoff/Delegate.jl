@@ -5,7 +5,7 @@
 ###### Delegate functions into field[s] of typed variable[s] or through field[s] of typed variable[s].
 
 
-      <p align="center">*family*</p>      |   <p align="center">*type of value that results*</p>
+      <p align="center">*family*</p>      |   <p align="center">*type of resulting value*</p>
       :---          | :---: 
       __@delegate__ | the result is `bare`, having the return type of delegated function
                     |  
