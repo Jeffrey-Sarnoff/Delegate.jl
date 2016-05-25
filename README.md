@@ -10,33 +10,10 @@ Delegate unary, binary, trinary functions over a field in 1,2,3 values of a type
 
 Delegate unary, binary, trinary functions into 1,2,3 fields of a type.
 
-    @delegate prefix: The result is `bare`, having the return type of delegated function.  
-    @traject  prefix: The result is `iso-typed`, returning a value of the same type processed.
+    @delegate.. : the result is `bare`, having the return type of delegated function.  
+    @traject..  : the result is `iso-typed`, returning a value of the same type processed.
 
-## exports
 
-    # macros that return values typed as the function delegated returns
-    # (providing the delegated function result as directly computed)
-    
-    @delegate_1field1var,   @delegate_1field2vars,
-    @delegate_2fields1var,  @delegate_3fields1var,
-    @delegate_2fields2vars, 
-    
-    # macros that return values typed as the parameter[s] of the delegation
-    # (wrapping the delegated function result in the dispatching type)
-
-    @traject_1field1var,   @traject_1field2vars,
-    @traject_2fields1var,  @traject_3fields1var,
-    @traject_2fields2vars
-    
-    # aliases
-    
-    @delegate1f1v      # aliases @delegate_1field1var
-    @traject1f1v       # aliases @traject_1field1var
-                       # others patterned as
-    @delgate1f2v       # aliases @delegate_1field2vars       
-    @traject2f1v       # aliases @traject_2fields1var
-    
 ## Use
 
 
@@ -114,5 +91,30 @@ Delegate unary, binary, trinary functions into 1,2,3 fields of a type.
     showall(myHiLo)                                            
     # HiLo(8012.888888888,4.440892098500626e-14)
 ```
+
+## exports
+
+    # macros that return values typed as the function delegated returns
+    # (providing the delegated function result as directly computed)
+    
+    @delegate_1field1var,   @delegate_1field2vars,
+    @delegate_2fields1var,  @delegate_3fields1var,
+    @delegate_2fields2vars, 
+    
+    # macros that return values typed as the parameter[s] of the delegation
+    # (wrapping the delegated function result in the dispatching type)
+
+    @traject_1field1var,   @traject_1field2vars,
+    @traject_2fields1var,  @traject_3fields1var,
+    @traject_2fields2vars
+    
+    # aliases
+    
+    @delegate1f1v      # aliases @delegate_1field1var
+    @traject1f1v       # aliases @traject_1field1var
+                       # others patterned as
+    @delgate1f2v       # aliases @delegate_1field2vars       
+    @traject2f1v       # aliases @traject_2fields1var  
+
 
 Please see the online help for each macro, or read the source file, for more examples.
