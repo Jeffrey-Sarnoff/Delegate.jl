@@ -10,7 +10,7 @@
     @traject..  : the result is `wrapped`, returning a value of the same type processed.
 
 
-## Use
+#### Use
 
 
 ```julia
@@ -88,7 +88,7 @@
     # HiLo(8012.888888888,4.440892098500626e-14)
 ```
 
-## exports
+#### Exports
 
     # macros that return values typed as the function delegated returns
     # (providing the delegated function result as directly computed)
