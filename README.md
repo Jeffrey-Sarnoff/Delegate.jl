@@ -5,7 +5,7 @@
 ###### Delegate functions into field[s] of typed variable[s] or through field[s] of typed variable[s].
 
 <p>
-      @delegate.. :  the result is `bare`, having the return type of delegated function.  
+      @delegate.. :  the result is `bare`, having the return type of delegated function.<br/>  
       @traject..  :  the result is `wrapped`, returning a value of the same type processed.
 </p>
 
