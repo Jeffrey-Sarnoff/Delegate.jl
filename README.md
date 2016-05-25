@@ -113,4 +113,10 @@
     @traject2f1v       # aliases @traject_2fields1var  
 
 
-Please see the online help for each macro, or read the source file, for more examples.
+Please see the online help for each macro, or read the source file, for more examples.  
+
+#### Credits
+
+This module is based on original work by John Myles White and Toivo Henningsson.  
+Relevant webpage references are given in src/Delegate.jl, at the end of the file.
+ 
