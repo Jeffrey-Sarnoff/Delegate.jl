@@ -1,13 +1,3 @@
-<html>
-<head>
-<style>
-body {background-color:lightgrey;}
-h1   {color:blue;}
-p    {color:green;}
-</style>
-</head>
-<body>
-
 ## Delegate.jl
 ```
                                                        Jeffrey Sarnoff © 2016-Mar-22 in New York City
@@ -15,14 +5,21 @@ p    {color:green;}
 ###### Delegate functions into field[s] of typed variable[s] or through field[s] of typed variable[s].  
 <br>
 
-<tab;e style="text-align:center;">
-      <p align="center">*family*</p>      |   <p align="center">*type of resulting value*</p>
+<style>
+td { text-align: center; }
+td * { display: inline; }
+div.centered { margin-left: auto; margin-right: auto; width: 80%; }
+</style>
+
+<div class="centered">
+
+      *family*      | *type of resulting value*
       :---          | :---: 
       __@delegate__ | the result is `bare`, having the return type of delegated function
                     |  
       __@traject__  | the result is `wrapped`, returning a value of the same type processed
-</div>
 
+</div>
 
 #### Use
 
