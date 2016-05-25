@@ -4,12 +4,6 @@
 ```  
 ###### Delegate functions into field[s] of typed variable[s] or through field[s] of typed variable[s].  
 <br>
-
-<style>
-td { text-align: center; margin: 0 auto 0 auto; }
-td * { display: inline; margin: 0 auto 0 auto; }
-</style>
-
       *family*      | *type of resulting value*
       :---          | :---: 
       __@delegate__ | the result is `bare`, having the return type of delegated function
