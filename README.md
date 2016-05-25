@@ -4,10 +4,10 @@
 ```
 ###### Delegate functions into field[s] of typed variable[s] or through field[s] of typed variable[s].
 
-
-      @delegate.. : the result is `bare`, having the return type of delegated function.  
-      @traject..  : the result is `wrapped`, returning a value of the same type processed.
-
+<pre>
+      @delegate.. :  the result is `bare`, having the return type of delegated function.  
+      @traject..  :  the result is `wrapped`, returning a value of the same type processed.
+</pre>
 
 #### Use
 
