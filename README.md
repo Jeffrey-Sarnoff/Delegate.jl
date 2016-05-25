@@ -1,5 +1,8 @@
 ## Delegate.jl
-#### Delegate functions into type fields or over iso-typed vars, with plain or iso-typed result.
+###### Delegate functions into type fields or over iso-typed vars, with plain or iso-typed result.
+```ruby
+                                                       Jeffrey Sarnoff © 2016-Mar-22 at New York
+```
 
 
 Delegate unary, binary, trinary functions over a field in 1,2,3 values of a type.  
