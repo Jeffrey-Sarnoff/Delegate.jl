@@ -6,12 +6,9 @@
 <br>
 
 <style>
-td { text-align: center; }
-td * { display: inline; }
-.centered { margin-left: auto; margin-right: auto; width: 98%; }
+td { text-align: center; margin: 0 auto 0 auto; }
+td * { display: inline; margin: 0 auto 0 auto; }
 </style>
-
-<div class="centered">
 
       *family*      | *type of resulting value*
       :---          | :---: 
@@ -19,7 +16,6 @@ td * { display: inline; }
                     |  
       __@traject__  | the result is `wrapped`, returning a value of the same type processed
 
-</div>
 
 #### Use
 
