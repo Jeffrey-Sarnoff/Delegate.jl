@@ -8,7 +8,7 @@
 <style>
 td { text-align: center; }
 td * { display: inline; }
-div.centered { margin-left: auto; margin-right: auto; width: 80%; }
+.centered { margin-left: auto; margin-right: auto; width: 98%; }
 </style>
 
 <div class="centered">
