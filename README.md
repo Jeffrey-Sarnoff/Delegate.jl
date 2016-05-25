@@ -10,7 +10,7 @@
     @traject..  : the result is `wrapped`, returning a value of the same type processed.
 
 
-### Examples of Use
+#### Use
 
 
 ```julia
