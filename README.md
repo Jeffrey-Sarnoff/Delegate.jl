@@ -1,8 +1,9 @@
 ## Delegate.jl
 ```
                                                        Jeffrey Sarnoff © 2016-Mar-22 in New York City
-```
-###### Delegate functions into field[s] of typed variable[s] or through field[s] of typed variable[s].
+```  
+###### Delegate functions into field[s] of typed variable[s] or through field[s] of typed variable[s].  
+<br>
 
 
       <p align="center">*family*</p>      |   <p align="center">*type of resulting value*</p>
@@ -10,6 +11,8 @@
       __@delegate__ | the result is `bare`, having the return type of delegated function
                     |  
       __@traject__  | the result is `wrapped`, returning a value of the same type processed
+
+
 
 #### Use
 
