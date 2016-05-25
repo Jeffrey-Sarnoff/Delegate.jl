@@ -1,17 +1,13 @@
 ## Delegate.jl
-###### Delegate functions into type fields or over iso-typed vars, with plain or iso-typed result.  
+###### Delegate functions into field[s] of typed variable[s] or through field[s] of typed variable[s].
 
 ```ruby
                                                        Jeffrey Sarnoff © 2016-Mar-22 in New York City
 ```
 
 
-Delegate unary, binary, trinary functions over a field in 1,2,3 values of a type.  
-
-Delegate unary, binary, trinary functions into 1,2,3 fields of a type.
-
     @delegate.. : the result is `bare`, having the return type of delegated function.  
-    @traject..  : the result is `iso-typed`, returning a value of the same type processed.
+    @traject..  : the result is `wrapped`, returning a value of the same type processed.
 
 
 ## Use
