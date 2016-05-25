@@ -3,7 +3,8 @@
                                                        Jeffrey Sarnoff © 2016-Mar-22 in New York City
 ```  
 ###### Delegate functions into field[s] of typed variable[s] or through field[s] of typed variable[s].  
-<br>
+  
+  
       *family*      | *type of resulting value*
       :---          | :---: 
       __@delegate__ | the result is `bare`, having the return type of delegated function
