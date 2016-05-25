@@ -1,3 +1,13 @@
+<html>
+<head>
+<style>
+body {background-color:lightgrey;}
+h1   {color:blue;}
+p    {color:green;}
+</style>
+</head>
+<body>
+
 ## Delegate.jl
 ```
                                                        Jeffrey Sarnoff © 2016-Mar-22 in New York City
@@ -5,13 +15,13 @@
 ###### Delegate functions into field[s] of typed variable[s] or through field[s] of typed variable[s].  
 <br>
 
-
+<tab;e style="text-align:center;">
       <p align="center">*family*</p>      |   <p align="center">*type of resulting value*</p>
       :---          | :---: 
       __@delegate__ | the result is `bare`, having the return type of delegated function
                     |  
       __@traject__  | the result is `wrapped`, returning a value of the same type processed
-
+</div>
 
 
 #### Use
@@ -124,3 +134,5 @@ Please see the online help for each macro, or read the source file, for more exa
 This module is based on original work by John Myles White and Toivo Henningsson.  
 Relevant webpage references are given in src/Delegate.jl, at the end of the file.
  
+</body>
+</html>
