@@ -4,10 +4,12 @@
 ```
 ###### Delegate functions into field[s] of typed variable[s] or through field[s] of typed variable[s].
 
-<p>
-      <b>@delegate</b> &nbsp;&nbsp; :  the result is `bare`, having the return type of delegated function.<br/>  
-      <b>@traject</b> &nbsp;&nbsp;&nbsp;&nbsp; :  the result is `wrapped`, returning a value of the same type processed.
-</p>
+
+      <p align="center">*family*</p>      |   <p align="center">*type of value that results*</p>
+      :---          | :---: 
+      __@delegate__ | the result is `bare`, having the return type of delegated function
+                    |  
+      __@traject__  | the result is `wrapped`, returning a value of the same type processed
 
 #### Use
 
