@@ -1,7 +1,7 @@
 using Delegate
 using Base.Test
 
-import Base: (==), (<), (<=), abs, iseven, isodd, (-), (+), (*), hypot;
+import Base: (==), (<), (<=), isequal, isless, abs, iseven, isodd, (-), (+), (*), hypot;
 
 import Delegate: @delegate_1field1var, @delegate_1field2vars, @delegate_2fields1var, 
                  @traject_1field1var,  @traject_1field2vars,  @traject_2fields1var;
@@ -13,7 +13,7 @@ end;
 
 @delegate_1field1var(  AnInt, val, [ iseven, isodd ] );
 
-@delegate_1field2vars( AnInt, val, [ (==), (<), (<=) ] );
+@delegate_1field2vars( AnInt, val, [ (==), (<), (<=), isequal, isless ] );
 
 @traject_1field1var(   AnInt, val, [ (-), abs ] );
 
