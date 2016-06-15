@@ -36,7 +36,7 @@
     
     type MyInt  val::Int  end;
 
-    # it is important to include isless, isequal with any of ==,!=,<,<=,>=,>
+    # IMPORTANT: include isless, isequal with any of ==,!=,<,<=,>=,>
     @delegate_1field2vars( MyInt, val, [ (<), (<=), isequal, isless ] );
   
     myFirstInt  = MyInt(3)
