@@ -32,11 +32,11 @@
 ```
 
 ```julia
-    import Base: (<), (<=)
+    import Base: (<), (<=), isequal, isless
     
     type MyInt  val::Int  end;
 
-    @delegate_1field2vars MyInt.val [ (<), (<=) ];
+    @delegate_1field2vars( MyInt, val, [ (<), (<=), isequal, isless ] );
   
     myFirstInt  = MyInt(3)
     mySecondInt = MyInt(7)
