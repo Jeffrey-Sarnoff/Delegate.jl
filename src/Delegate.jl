@@ -62,14 +62,6 @@ macro delegate1f1v(sourcetype, field1, targets)
     end
 end
 
-"""
-see @delegate_1field1var
-"""
-macro delegate1f1v(sourcetype, field1, targets)
-    quote
-        @delegate_1field1var($(esc(sourcetype)), $(esc(field1)), $(esc(targets)))
-    end
-end
 
 # for methods that take two equi-typed source arguments
 
