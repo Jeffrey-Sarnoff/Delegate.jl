@@ -1,6 +1,6 @@
 ## Delegate.jl
-```
-                                                       Jeffrey Sarnoff © 2016-Mar-22 in New York City
+```Ruby
+                                    Jeffrey Sarnoff © 2016-Mar-22 in New York City
 ```  
 ###### Delegate functions into field[s] of typed variable[s] or through field[s] of typed variable[s].  
 <br>
@@ -56,6 +56,20 @@
     myRightTriangle  = RightTriangle( 3.0, 4.0 )
     
     hypot(myRightTriangle)   #  5.0
+```    
+
+```julia
+    import Base: log, tan
+    
+    type MyFloat  val::Float64  end;
+
+    @traject_1field1var( MyFloat, val, [ log, tan ] );
+
+    myFirstFloat   = MyFloat(1.0)
+    mySecondFloat  = MyFloat(0.25)
+
+    myFloatLogs    = log(myFirsFloat)    # MyFloat(0.0)
+    myFloatTans    = tan(mySecondFloat)  # MyFloat(0.5463024898437905)
 ```    
 
 ```julia
