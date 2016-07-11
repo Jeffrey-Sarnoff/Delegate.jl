@@ -14,23 +14,6 @@
 
 #### Use
 
-
-```julia
-    import Base: length, last
-    
-    type MyInts     elems::Vector{Int} end;
-    type MyNums{T}  elems::Vector{T}   end;
-
-    @delegate_1field1var( MyInts, elems, [ length,  last ] );
-    @delegate_1field1var( MyNums, elems, [ length,  last ] );
-       
-    myInts = MyInts([5, 4, 3, 2, 1]);
-    myNums = MyNums([1.0, 2.0, 3.0]);
-    
-    length(myInts), length(myNums) # 5, 3
-    last(myInts), last(myNums)     # 1, 3.0
-```
-
 ```julia
     import Base: (<), (<=), isequal, isless
     
@@ -44,18 +27,6 @@
     
     myFirstInt  <  mySecondInt  # true
     mySecondInt <= myFirstInt   # false
-```    
-
-```julia
-    import Base: hypot
-    
-    type RightTriangle   legA::Float64; legB::Float64;  end;
-
-    @delegate_2fields1var( RightTriangle, legA, legB, [ hypot, ] );
-  
-    myRightTriangle  = RightTriangle( 3.0, 4.0 )
-    
-    hypot(myRightTriangle)   #  5.0
 ```    
 
 ```julia
@@ -88,6 +59,18 @@
 ```    
 
 ```julia
+    import Base: hypot
+    
+    type RightTriangle   legA::Float64; legB::Float64;  end;
+
+    @delegate_2fields1var( RightTriangle, legA, legB, [ hypot, ] );
+  
+    myRightTriangle  = RightTriangle( 3.0, 4.0 )
+    
+    hypot(myRightTriangle)   #  5.0
+```    
+
+```julia
     function renormalize(a::Float64, b::Float64)
         hi = a + b
         t = hi - a
@@ -103,6 +86,22 @@
     # HiLo(8012.89,4.44089e-14)
     showall(myHiLo)                                            
     # HiLo(8012.888888888,4.440892098500626e-14)
+```
+
+```julia
+    import Base: length, last
+    
+    type MyInts     elems::Vector{Int} end;
+    type MyNums{T}  elems::Vector{T}   end;
+
+    @delegate_1field1var( MyInts, elems, [ length,  last ] );
+    @delegate_1field1var( MyNums, elems, [ length,  last ] );
+       
+    myInts = MyInts([5, 4, 3, 2, 1]);
+    myNums = MyNums([1.0, 2.0, 3.0]);
+    
+    length(myInts), length(myNums) # 5, 3
+    last(myInts), last(myNums)     # 1, 3.0
 ```
 
 #### Exports
