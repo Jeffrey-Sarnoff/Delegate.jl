@@ -1,4 +1,7 @@
 ## Delegate.jl
+
+__this package has been replaced by TypedDelegation.jl__
+
 ```Ruby
                                     Jeffrey Sarnoff © 2016-Mar-22 in New York City
 ```  
